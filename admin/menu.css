@@ -1,0 +1,59 @@
+@charset "utf-8";
+/* CSS Document */
+.sidebarmenu{
+margin:0px 0;
+padding:0;
+width:175px;
+}
+.sidebarmenu a.menuitem{
+	background:#555;
+	color: #fff;
+	font-size:12px;
+	font-weight:800;
+	display: block;
+	position: relative;
+	width:170px;
+	height:31px;
+	margin:0 0 5px 0;
+	line-height:31px;
+	padding:0px 0 0 10px;
+	text-decoration: none;
+	-border-radius: 5px;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+}
+.sidebarmenu a.menuitem:hover{background:url(images/sidebar_menu_top_a.gif) no-repeat center top;}
+
+.sidebarmenu a.menuitem:visited, .sidebarmenu .menuitem:active{
+color: white;
+}
+.sidebarmenu a.menuitem .statusicon{
+position: absolute;
+top:11px;
+right:7px;
+border: none;
+}
+
+.sidebarmenu div.submenu{
+background: white;
+}
+.sidebarmenu div.submenu ul{ 
+list-style-type: none;
+margin: 0;
+padding: 0 0 5px 0;
+}
+.sidebarmenu div.submenu ul li{
+border-bottom: 1px dotted #bfd1d9;
+}
+.sidebarmenu div.submenu ul li a{
+display: block;
+color: black;
+text-decoration: none;
+padding:5px 0;
+padding-left: 10px;
+}
+.sidebarmenu div.submenu ul li a:hover{
+background:#CCC;
+color: #0e4354;
+}
+

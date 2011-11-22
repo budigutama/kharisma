@@ -1,0 +1,246 @@
+.qmmc .qmdivider  {
+display : block;
+font-size : 1px;
+border-width : 0;
+border-style : solid;
+position : relative;
+z-index : 1;
+}
+.qmmc .qmdividery {
+float : left;
+width : 0;
+}
+.qmmc .qmtitle {
+display : block;
+cursor : default;
+white-space : nowrap;
+position : relative;
+z-index : 1;
+}
+.qmclear {
+font-size : 1px;
+height : 0;
+width : 0;
+clear : left;
+line-height : 0;
+display : block;
+float : none !important ;
+}
+.qmmc {
+position : relative;
+z-index : 10;
+}
+.qmmc a, .qmmc li {
+float : left;
+display : block;
+white-space : nowrap;
+position : relative;
+z-index : 1;
+}
+.qmmc div a, .qmmc ul a, .qmmc ul li {
+float : none;
+}
+.qmsh div a {
+float : left;
+}
+.qmmc div {
+visibility : hidden;
+position : absolute;
+}
+.qmmc .qmcbox {
+cursor : default;
+display : inline-block;
+position : relative;
+z-index : 1;
+}
+.qmmc .qmcbox a {
+display : inline;
+}
+.qmmc .qmcbox div {
+float : none;
+position : static;
+visibility : inherit;
+left : auto;
+}
+.qmmc li {
+z-index : auto;
+}
+.qmmc ul {
+left : -10000px;
+position : absolute;
+z-index : 10;
+}
+.qmmc, .qmmc ul {
+list-style : none;
+padding : 0;
+margin : 0;
+}
+.qmmc li a {
+float : none;
+}
+.qmmc li:hover > ul {
+left : auto;
+}
+#qm0 ul {
+top : 100%;
+}
+#qm0 ul li:hover > ul {
+top : 0;
+left : 100%;
+} 
+
+	/*"""""""" (MAIN) Container""""""""*/	
+	#qm0	
+	{	
+		width:auto;
+		border-width:1px 0px 1px 1px;
+		border-style:solid;
+		border-color:#FFFFFF;
+	}
+
+
+	/*"""""""" (MAIN) Items""""""""*/	
+	#qm0 a	
+	{	
+		padding:5px 20px 5px 8px;
+		background-color:transparent;
+		color:blue;
+		font-family:Arial;
+		font-style:inherit;
+		font-size:14px;
+		color:#333;
+		font-weight:bold;
+		text-align:left;
+		border-width:0px 1px 0px 0px;
+		border-style:solid;
+		border-color:#FFFFFF;
+			}
+
+
+	/*"""""""" (MAIN) Hover State""""""""*/	
+	#qm0 a:hover	
+	{	
+		background-color:#6df85a;
+		color:#fff;
+		font-weight:bold;
+	}
+
+
+	/*"""""""" (MAIN) Hover State - (duplicated for pure CSS)""""""""*/	
+	#qm0 li:hover>a	
+	{	
+		background-color:#6df85a;
+		color:#fff;
+		font-weight:bold;
+	}
+
+
+	/*"""""""" (MAIN) Active State""""""""*/	
+	body #qm0 .qmactive, body #qm0 .qmactive:hover	
+	{	
+		background-color:#6df85a;
+		color:#fff;
+		font-weight:bold;
+	}
+
+
+	/*"""""""" (SUB) Container""""""""*/	
+	#qm0 div, #qm0 ul	
+	{	
+		padding:5px;
+		margin:0px;
+		background-color:#6df85a;
+
+	}
+
+
+	/*"""""""" (SUB) Items""""""""*/	
+	#qm0 div a, #qm0 ul a	
+	{	
+		padding:2px 40px 2px 5px;
+		color:#fff;
+		font-size:12px;
+		font-weight:bold;
+
+	}
+
+
+	/*"""""""" (SUB) Hover State""""""""*/	
+	#qm0 div a:hover	
+	{	
+		background-color:#4fb043;
+		color:#fff;
+		text-decoration:none;
+		border-color:#666666;
+	}
+
+
+	/*"""""""" (SUB) Hover State - (duplicated for pure CSS)""""""""*/	
+	#qm0 ul li:hover>a	
+	{	
+		background-color:#4fb043;
+		color:#fff;
+		text-decoration:none;
+		border-color:#666666;
+	}
+
+
+	/*"""""""" (SUB) Active State""""""""*/	
+	body #qm0 div .qmactive, body #qm0 div .qmactive:hover	
+	{	
+		background-color:#4fb043;
+		color:#fff;
+		text-decoration:underline;
+		border-color:#666666;
+	}
+
+
+	/*"""""""" Individual Titles""""""""*/	
+	#qm0 .qmtitle	
+	{	
+		margin:2px 5px 5px 5px;
+		color:#fff; /*warna*/
+		font-family:Arial;
+		font-size:12px;
+		font-weight:bold;
+	}
+
+
+	/*"""""""" Individual Horizontal Dividers""""""""*/	
+	#qm0 .qmdividerx	
+	{	
+		border-top-width:2px;
+		margin:4px 5px 4px 5px;
+		border-color:#A2A1AD;
+	}
+
+
+	/*"""""""" Custom Rule""""""""*/	
+	ul#qm0 ul li:hover > a.qmparent	
+	{	
+		background-image:url(images/arrow.gif);
+		text-decoration:underline;
+	}
+
+
+	/*"""""""" Custom Rule""""""""*/	
+	ul#qm0 ul li .qmparent	
+	{	
+		background-repeat:no-repeat;
+		background-position:92% 50%;
+	}
+
+
+	/*"""""""" Custom Rule""""""""*/	
+	ul#qm0 li:hover > a.qmparent	
+	{	
+		text-decoration:underline;
+	}
+
+
+	/*"""""""" Custom Rule""""""""*/	
+	ul#qm0 li .qmparent	
+	{	
+		background-repeat:no-repeat;
+		background-position:92% 50%;
+	}

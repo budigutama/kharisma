@@ -1,0 +1,3 @@
+[12-Feb-2011 00:04:13] PHP Warning:  mysql_fetch_array(): supplied argument is not a valid MySQL result resource in /home/parental/public_html/inc/getdata/kota.php on line 8
+[12-Feb-2011 00:08:30] PHP Warning:  mysql_fetch_array(): supplied argument is not a valid MySQL result resource in /home/parental/public_html/inc/getdata/stok.php on line 36
+[12-Feb-2011 00:12:34] PHP Warning:  mysql_fetch_array(): supplied argument is not a valid MySQL result resource in /home/parental/public_html/inc/getdata/ukuran.php on line 30

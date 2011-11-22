@@ -1,0 +1,111 @@
+
+#gallery{
+	/* CSS3 Box Shadow */
+	-moz-box-shadow:0 0 3px #AAAAAA;
+	-webkit-box-shadow:0 0 3px #AAAAAA;
+	box-shadow:0 0 3px #AAAAAA;
+	
+	/* CSS3 Rounded Corners */
+	
+	-moz-border-radius-bottomleft:4px;
+	-webkit-border-bottom-left-radius:4px;
+	border-bottom-left-radius:4px;
+	
+	-moz-border-radius-bottomright:4px;
+	-webkit-border-bottom-right-radius:4px;
+	border-bottom-right-radius:4px;
+	
+	border:1px solid white;
+	
+	background:url(../gambar/panel.jpg) repeat-x bottom center #ffffff;
+	
+	/* The width of the gallery */
+	width:270px;
+	overflow:hidden;
+}
+
+#slides{
+	/* This is the slide area */
+	height:300px;
+	
+	/* jQuery changes the width later on to the sum of the widths of all the slides. */
+	width:270px;
+	overflow:hidden;
+}
+
+.slide{
+	float:left;
+}
+
+#menu{
+	/* This is the container for the thumbnails */
+	height:45px;
+	width:270px;
+}
+
+ul{
+	margin:0px;
+	padding:0px;
+}
+
+#aa{
+	/* Every thumbnail is a li element */
+	width:60px;
+	display:inline-block;
+	list-style:none;
+	height:45px;
+	overflow:hidden;
+}
+
+#aa.inact:hover{
+	/* The inactive state, highlighted on mouse over */
+	background:url(../gambar/pic_bg.png) repeat;
+}
+
+#aa.act,#aa.act:hover{
+	/* The active state of the thumb */
+	background:url(../gambar/active_bg.png) no-repeat;
+}
+
+#aa.act a{
+	cursor:default;
+}
+
+.fbar{
+	/* The left-most vertical bar, next to the first thumbnail */
+	padding-top:10px;
+}
+
+#aa a{
+	display:block;
+	padding-top:10px;
+	margin-top:10px;
+}
+
+a img{
+	border:none;
+}
+
+
+/* The styles below are only necessary for the demo page */
+
+
+#main{
+	/* The main container */
+	margin-top:-10px;
+	margin-left:-10px;
+	text-align:center;
+	width:270px;
+	position:relative;
+}
+
+a, a:visited {
+	color:#0196e3;
+	text-decoration:none;
+	outline:none;
+}
+
+a:hover{
+	text-decoration:underline;
+}
+

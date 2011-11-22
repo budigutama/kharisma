@@ -1,0 +1,40 @@
+@charset "utf-8";
+/* CSS Document */
+.boxgrid{ 
+	width: 160px; 
+	height: 200px; 
+	margin:10px; 
+	background:#161613; 
+	overflow: hidden; 
+	position: relative; 
+}
+	.boxgrid img{ 
+		position: absolute; 
+		top: 0; 
+		left: 0; 
+		border: 0; 
+	}
+	.boxgrid p{ 
+		color:#afafaf; 
+		font-weight:bold; 
+		font:10pt "Lucida Grande", Arial, sans-serif; 
+	}
+	.boxgrid H3{ 
+		color:#afafaf; 
+		font-weight:bold; 
+		font:"Lucida Grande", Arial, sans-serif; 
+	}
+	
+.boxcaption{ 
+	float: left; 
+	position: absolute;
+	top:160px;
+	background: #000; 
+	height: 100px; 
+	width: 100%; 
+	opacity: .8; 
+	/* For IE 5-7 */
+	filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=80);
+	/* For IE 8 */
+	-MS-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=80)";
+}
