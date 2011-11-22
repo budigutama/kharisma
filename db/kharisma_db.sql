@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Nov 19, 2011 at 09:47 PM
+-- Generation Time: Nov 22, 2011 at 01:18 PM
 -- Server version: 5.0.51
 -- PHP Version: 5.2.6
 
@@ -88,10 +88,10 @@ CREATE TABLE `t_detailproduk` (
 --
 
 INSERT INTO `t_detailproduk` (`id_detailproduk`, `id_produk`, `id_warna`, `tanggal_detailproduk`, `stok_detailproduk`, `berat_detailproduk`) VALUES
-(1, 0003, 1, '2010-11-13 12:33:37', 10, 2),
-(2, 0004, 3, '2011-11-14 13:35:55', 11, 1),
+(1, 0003, 1, '2010-11-13 12:33:37', 6, 2),
+(2, 0004, 3, '2011-11-14 13:35:55', 10, 1),
 (3, 0005, 2, '2011-11-15 11:18:31', 12, 4),
-(4, 0006, 2, '2011-11-17 13:39:04', 3, 6),
+(4, 0006, 2, '2011-11-17 13:39:04', 2, 6),
 (5, 0007, 2, '2011-11-17 13:48:27', 2, 6),
 (6, 0007, 4, '2011-11-17 13:49:55', 2, 6),
 (7, 0007, 5, '2011-11-17 13:50:08', 1, 6),
@@ -116,15 +116,12 @@ CREATE TABLE `t_detail_pembelian` (
   PRIMARY KEY  (`id_detailpembelian`),
   KEY `pembelian_FK` (`id_pembelian`),
   KEY `produk_id_FK` (`id_detailproduk`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=17 ;
 
 --
 -- Dumping data for table `t_detail_pembelian`
 --
 
-INSERT INTO `t_detail_pembelian` (`id_detailpembelian`, `id_pembelian`, `hargabeli`, `id_detailproduk`, `qty`, `berat`, `retur_qty`) VALUES
-(1, 1, 5850000, 6, 1, 6, 0),
-(2, 1, 1800000, 1, 1, 2, 0);
 
 -- --------------------------------------------------------
 
@@ -720,7 +717,7 @@ CREATE TABLE `t_member` (
 --
 
 INSERT INTO `t_member` (`id_member`, `id_kota`, `nama_member`, `alamat_member`, `telp_member`, `kodepos_member`, `email_member`, `password_member`, `verificationcode_member`, `status_member`) VALUES
-(1, 25, 'joni', 'kpo', '23456789', '43152', 'budi@localhost', 'e807f1fcf82d132f9bb018ca6738a19f', 'fa6637549f3c518b86b3699904667ac2', '1');
+(1, 24, 'joni', 'kpo', '23456789', '43152', 'budi@localhost', 'e807f1fcf82d132f9bb018ca6738a19f', 'fa6637549f3c518b86b3699904667ac2', '1');
 
 -- --------------------------------------------------------
 
@@ -853,7 +850,7 @@ CREATE TABLE `t_pembelian` (
   `kirim_kdpos` varchar(6) NOT NULL,
   `kirim_ongkos` int(32) NOT NULL,
   `kirim_resi` varchar(15) NOT NULL,
-  `kirim_id` int(11) NOT NULL,
+  `id_jeniskirim` int(11) NOT NULL,
   `transfer_bank` varchar(20) NOT NULL,
   `transfer_no` varchar(30) NOT NULL,
   `transfer_jumlah` double NOT NULL,
@@ -862,14 +859,12 @@ CREATE TABLE `t_pembelian` (
   PRIMARY KEY  (`id_pembelian`),
   KEY `kota_FK` (`kirim_kota`),
   KEY `member_FK` (`id_member`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=11 ;
 
 --
 -- Dumping data for table `t_pembelian`
 --
 
-INSERT INTO `t_pembelian` (`id_pembelian`, `session_id`, `tgl_beli`, `tgl_bayar`, `tgl_kirim`, `tgl_terima`, `status`, `status_pembayaran`, `id_member`, `pembayaran`, `kirim_nama`, `kirim_alamat`, `kirim_telp`, `kirim_kota`, `kirim_kdpos`, `kirim_ongkos`, `kirim_resi`, `kirim_id`, `transfer_bank`, `transfer_no`, `transfer_jumlah`, `id_rekening`, `totalbayar`) VALUES
-(1, 'n98qmq6atciqmop7n77nsgsdf7', '2011-11-18 13:09:54', '0000-00-00 00:00:00', '0000-00-00', '0000-00-00', 'pesan', '1', 1, '', '', '', '', 0, '', 0, '', 0, '', '', 0, '', 0);
 
 -- --------------------------------------------------------
 
@@ -887,12 +882,14 @@ CREATE TABLE `t_pemesanan` (
   `tanggal_pesan` date NOT NULL,
   PRIMARY KEY  (`id_temp`),
   KEY `produk_FK` (`id_detailproduk`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='Temporari Pemesanan' AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 COMMENT='Temporari Pemesanan' AUTO_INCREMENT=20 ;
 
 --
 -- Dumping data for table `t_pemesanan`
 --
 
+INSERT INTO `t_pemesanan` (`id_temp`, `id_detailproduk`, `session_id`, `qty`, `berat`, `temp_hargadiskon`, `tanggal_pesan`) VALUES
+(3, 1, '97brhs1t9to263ip0063vog6h4', 2, 2, 1800000, '2011-11-19');
 
 -- --------------------------------------------------------
 
@@ -919,11 +916,11 @@ CREATE TABLE `t_produk` (
 --
 
 INSERT INTO `t_produk` (`id_produk`, `id_merek`, `id_kategori`, `nama_produk`, `harga_produk`, `deskripsi_produk`, `diskon_produk`, `rating_produk`, `voterrating_produk`, `viewcounter_produk`) VALUES
-(0003, 1, 1, 'Bagus', 2000000, 'bagus Lho', 10, 0, 0, 12),
-(0004, 1, 1, 'jelek', 122222, '		asa										', 0, 0, 0, 116),
-(0005, 2, 2, 'Drums Bagus', 2500000, 'Drums Bagus canggih sekali', 10, 0, 0, 17),
-(0006, 3, 2, 'GIG MAKER', 6000000, '		as		', 5, 0, 0, 6),
-(0007, 3, 2, 'STAGE CUSTOM BIRCH', 6500000, 'Borrowing from our legendary Recording Custom drum sets, the world-famous Yamaha birch sound is now available in an affordable package. From the YESS mounting system to the tom ball clamps to the rich lacquer finishes, the Stage Custom Birch encompasses value, quality, and craftsmanship.', 10, 0, 0, 17),
+(0003, 1, 1, 'Bagus', 2000000, 'bagus Lho', 10, 0, 0, 26),
+(0004, 1, 1, 'jelek', 122222, '		asa										', 0, 0, 0, 126),
+(0005, 2, 2, 'Drums Bagus', 2500000, 'Drums Bagus canggih sekali', 10, 0, 0, 18),
+(0006, 3, 2, 'GIG MAKER', 6000000, '		as		', 5, 0, 0, 8),
+(0007, 3, 2, 'STAGE CUSTOM BIRCH', 6500000, 'Borrowing from our legendary Recording Custom drum sets, the world-famous Yamaha birch sound is now available in an affordable package. From the YESS mounting system to the tom ball clamps to the rich lacquer finishes, the Stage Custom Birch encompasses value, quality, and craftsmanship.', 10, 0, 0, 23),
 (0008, 3, 2, 'Tour Custom', 5600000, 'Designed for Rock drummers from the start, Rock Tour is ideal for live situations when you need to cut through a wall of guitars.Designed for Rock drummers from the start, Rock Tour is ideal for live situations when you need to cut through a wall of guitars.Designed for Rock drummers from the start, Rock Tour is ideal for live situations when you need to cut through a wall of guitars.', 10, 0, 0, 8);
 
 -- --------------------------------------------------------
