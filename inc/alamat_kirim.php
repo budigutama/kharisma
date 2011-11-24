@@ -18,6 +18,7 @@ $(document).ready(function(){
 $qinvo =mysql_query("SELECT * FROM t_pembelian WHERE session_id ='".session_id()."'ORDER BY id_pembelian DESC LIMIT 1");
 $dinvo =mysql_fetch_array($qinvo);
 $iddb= $dinvo['id_pembelian'];
+$email=$_SESSION['email_member'];
 if(isset($_POST['submit1'])){
 	mysql_query("UPDATE t_pembelian	SET 
 				kirim_nama = '$_POST[nama1]',
@@ -28,6 +29,7 @@ if(isset($_POST['submit1'])){
 				id_jeniskirim =  '$_POST[jeniskirim1]',
 				kirim_ongkos =  '$_POST[ongkir]'
 				WHERE id_pembelian = '$iddb'");
+	emailshipping($iddb,$email);
 	echo "<script>window.location = '?page=confirm';</script>";
 }
 elseif(isset($_POST['submit2'])){
@@ -40,6 +42,7 @@ elseif(isset($_POST['submit2'])){
 				id_jeniskirim =  '$_POST[jeniskirim2]',
 				kirim_ongkos =  '$_POST[ongkir]'
 				WHERE id_pembelian = '$iddb' ");
+	emailshipping($iddb,$email);
 	echo "<script>window.location = '?page=confirm';</script>";
 }
 

@@ -1,0 +1,44 @@
+.anylinkcss{
+position: absolute;
+left: 0;
+top: 0;
+background:#FFF;
+visibility: hidden;
+font: normal 12px Verdana;
+line-height: 23px;
+z-index: 100; /* zIndex should be greater than that of shadow's below */
+width: 170px; /* default width for menu */
+border:#999  solid 2px;
+-moz-border-radius: 6px;
+-webkit-border-radius: 6px;
+}
+
+.anylinkcss ul{
+margin: 0;
+padding: 0;
+list-style-type: none;
+}
+
+.anylinkcss ul li a{
+width: 100%;
+display: block;
+text-indent: 3px;
+padding: 1px 0;
+text-decoration: none;
+font-weight: bold;
+text-indent: 5px;
+}
+
+.anylinkcss a:hover{ /*hover background color*/
+background:#cccccc;
+color:#222222;
+}
+
+.anylinkshadow{ /*CSS for shadow. Keep this as is */
+position: absolute;
+left: 0;
+top: 0;
+z-index: 99; /*zIndex for shadow*/
+background: black;
+visibility: hidden;
+}

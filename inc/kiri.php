@@ -1,43 +1,60 @@
+<script type="text/javascript">
+anylinkcssmenu.init("anchorclass")
+</script>
+
  <div class="border_box">
     <div class="title_box">Kategori</div>
        <ul class="left_menu">
         <?php
-		$querycat = mysql_query("SELECT * FROM t_kategori");
+		$querycat = mysql_query("SELECT * FROM t_kategori a, t_produk b WHERE a.id_kategori=b.id_kategori GROUP BY a.id_kategori");
 		$no = 1;
 		while($datacat = mysql_fetch_array($querycat)){
+			$idkat =$datacat['id_kategori'];
 			if($no%2 == 1){
 				echo "<li class='odd'>";
 			}
 			else{
 				echo "<li class='even'>";
-			}
-		echo "<a href='?idkat=$datacat[id_kategori]'><span class='icon icon64' style='margin-top:3px;'></span>$datacat[nama_kategori]</a></li>";
+			} ?>
+		<a href='#' class="anchorclass someotherclass" rel="submenu2" rev="lr">
+        <span class='icon icon64' style='margin-top:3px;'></span><?php echo $datacat[nama_kategori]; ?>
+        </a>
+           <div id="submenu2" class="anylinkcss">
+           <ul>
+           		<li>
+                <a href="?idkat=<?php echo $idkat ?>">
+                <span class='icon icon115' style='margin-top:3px;'></span>Semua
+                </a></li>
+			<?php
+            $Qmer = mysql_query("SELECT * FROM t_merek a, t_produk b 
+									WHERE a.id_merek=b.id_merek
+									AND b.id_kategori=$idkat
+									GROUP BY a.id_merek");
+            $i=1;
+			while($mer = mysql_fetch_array($Qmer)){
+                if($i%2 == 1){
+                    echo "<li style='background:#f0f4f5'>";
+                }
+                else{
+                    echo "<li>";
+                } ?>
+                <a href="?idkat=<?php echo $idkat ?>&idmerk=<?php echo $mer['id_merek'] ?>">
+                <span class='icon icon115' style='margin-top:3px;'></span><?php echo $mer['nama_merek']; ?>
+                </a></li>
+				<?php 
+                $i++;
+                }
+                ?>
+            </ul>
+            </div>
+        </li>
+        <?php 
 		$no++;
 		}
 		?>
         </ul> 
         </div>
-   
- <div class="border_box">
-    <div class="title_box">Merek</div>
-       <ul class="left_menu">
-        <?php
-		$qmerek = mysql_query("SELECT * FROM t_merek");
-		$no = 1;
-		while($dmerek = mysql_fetch_array($qmerek)){
-			if($no%2 == 1){
-				echo "<li class='odd'>";
-			}
-			else{
-				echo "<li class='even'>";
-			}
-		echo "<a href='?idmerk=$dmerek[id_merek]'><span class='icon icon115' style='margin-top:3px;'></span>$dmerek[nama_merek]</a></li>";
-		$no++;
-		}
-		?>
-        </ul> 
-        </div>
-   
+      
      <div class="border_box">
      <div class="title_box">Barang Diskon</div> 
      <?php

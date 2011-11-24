@@ -62,26 +62,6 @@ else
 									LIMIT 9";
 				}
 			}
-			elseif (isset($_GET['size'])){
-				$size=$_GET['size'];
-				$title = "Produk Size $size";
-				$sqlproduk = "SELECT * FROM produk a, detailproduk b, ukuran c
-							  WHERE a.id_produk=b.id_produk
-							  AND b.id_ukuran=c.id_ukuran
-							  AND c.nama_ukuran='$size'
-							  GROUP BY a.id_produk
-							  LIMIT 9";
-			}
-			elseif (isset($_GET['warna'])){
-				$warna=$_GET['warna'];
-				$title = "Produk Warna $warna";
-				$sqlproduk = "SELECT * FROM produk a, detailproduk b, warna c
-							  WHERE a.id_produk=b.id_produk
-							  AND b.id_warna=c.id_warna
-							  AND c.nama_warna='$warna'
-							  GROUP BY a.id_produk
-							  LIMIT 9";
-			}
 			elseif (isset($_GET['harga'])){
 				$harga=$_GET['harga'];
 				$title = "Produk Harga Rp.".substr($harga,14,7)."an";
@@ -93,23 +73,20 @@ else
 			}
 			elseif (isset($_GET['idkat'])){
 				$idk=$_GET['idkat'];
+				$qmerek ="";
+				$jmerek ="";
+				if (isset($_GET['idmerk'])){
+					$idm=$_GET['idmerk'];
+					$merek=mysql_fetch_array(mysql_query("Select * FROM t_merek Where id_merek=$idm"));
+					$qmerek = "AND a.id_merek=$idm";
+					$jmerek = "Dan Merek $merek[nama_merek]";
+				}
 				$kategori=mysql_fetch_array(mysql_query("Select * FROM t_kategori Where id_kategori=$idk"));
-				$title = "Produk Kategori $kategori[nama_kategori]";
-				$sqlproduk = "SELECT * FROM t_produk a, t_detailproduk b, t_kategori c
+				$title = "Produk Kategori $kategori[nama_kategori] $jmerek";
+				$sqlproduk = "SELECT * FROM t_produk a, t_detailproduk b
 							  WHERE a.id_produk=b.id_produk
-							  AND a.id_kategori=c.id_kategori
 							  AND a.id_kategori=$idk
-							  GROUP BY a.id_produk
-							  LIMIT 9";
-			}
-			elseif (isset($_GET['idmerk'])){
-				$idm=$_GET['idmerk'];
-				$merek=mysql_fetch_array(mysql_query("Select * FROM t_merek Where id_merek=$idm"));
-				$title = "Produk Merek $merek[nama_merek]";
-				$sqlproduk = "SELECT * FROM t_produk a, t_detailproduk b, t_merek c
-							  WHERE a.id_produk=b.id_produk
-							  AND a.id_merek=c.id_merek
-							  AND a.id_merek=$idm
+							  $qmerek
 							  GROUP BY a.id_produk
 							  LIMIT 9";
 			}

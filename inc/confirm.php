@@ -88,14 +88,8 @@
             </td>
 		</tr>
 				<tr bgcolor="#FFFFFF">
-                    <td colspan="2" align="left">
+                    <td colspan="5" align="left">
                     <strong>Ongkos Kirim</strong>
-                    </td>
-                    <td colspan="3" align="center">(
-                    <?php
-                    echo (int)ceil($stokberat)." Kg  x  ";
-                    ?>
-                     Rp. <?php echo number_format($ongkos,"0",".","."); ?> )
                     </td>
                     <td align="right" style="font-weight:bold">
                       <u>Rp. <?php echo number_format($ongkos,"0",".","."); ?> </u> <strong>+</strong>
@@ -166,6 +160,6 @@
         Proses Order / Pemesanan selesai, info detailnya telah kami kirikan kepada email <?php echo $_SESSION['email_member']; ?>, 
         Jika ada data yang belum sesuai silahkan pilih Step ( langkah ) diatas yang ingin diperbaiki..<br />
         Selanjutnya silahkan pilih menu history untuk melakukan konfirmasi pembayaran..<br />
-	<input type="reset" class="buton" value="Selesai" onClick="window.location ='?page=history';" />
+	    <a href="?page=history" class="button action blue" /><span class="icon icon43"></span><span class="label1">Selesai</span></a>
 </div></div></div>
 

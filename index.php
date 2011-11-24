@@ -26,6 +26,8 @@ require_once('fungsi/db_koneksi.php');
 <link rel="stylesheet" href="css/css3-buttons.css" type="text/css"  media="screen">
 <link rel="stylesheet" type="text/css" href="css/box.css" />
 <link href="js/jalert/jquery.alerts.css" rel="stylesheet" type="text/css" media="screen">
+<link rel="stylesheet" type="text/css" href="css/anylinkcssmenu.css" />
+<script type="text/javascript" src="js/anylinkcssmenu.js"></script>
 
 <link rel="stylesheet" href="js/tabs/jquery.tabs.css" type="text/css" media="print, projection, screen">
 <script src="js/jalert/jquery.alerts.js" type="text/javascript"></script>
