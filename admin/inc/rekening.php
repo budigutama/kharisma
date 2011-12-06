@@ -183,8 +183,9 @@ if(isset($_GET['act'])){
             </tr>
         	<tr>
             	<td colspan="2" align="center">
-                <input type="submit" name="save" value="Simpan" class="buton"/>
-                <input type="reset" name="reset" value="Batal" onClick="window.location = '?page=rekening';" class="buton"/></td>
+                	<button name="save" class="blue"/><span class="label1">Simpan</span></button>
+                    <a class="button red" href="?page=rekening"/><span class="label1">Batal</span></a>
+                </td>
             </tr>
         </table>
 	</form>
@@ -225,8 +226,8 @@ if(isset($_GET['act'])){
             </tr>
         	<tr>
             	<td colspan="2" align="center">
-                <input type="submit" name="update" value="Ubah"  class="buton"/>
-                <input type="reset" name="reset" value="Batal" onClick="window.location = '?page=rekening';"  class="buton"/></td>
+                	<button name="update" class="blue"/><span class="label1">Ubah</span></button>
+                    <a class="button red" href="?page=rekening"/><span class="label1">Batal</span></a></td>
             </tr>
         </table>
 	</form>
@@ -250,7 +251,8 @@ else{
 	<table width="100%" style=" margin-top:10px;">
     <tr>
     <td align="right">
-	<a href="?page=rekening&act=add" class="buton">Tambah Rekening</a>
+	<a href="?page=rekening&act=add" class="button blue">
+    <span class="label1">Tambah Rekening</span></a>
     </td>
     <td align="right" width="70%">
     <form method="post" action="">
@@ -261,7 +263,9 @@ else{
             <option value="3" <?php if(isset($_POST['type'])){ echo($_POST['type'] == 3)?"selected":""; } ?>>Cabang</option>
             <option value="4" <?php if(isset($_POST['type'])){ echo($_POST['type'] == 4)?"selected":""; } ?>>No Rekening</option>
         </select>
-    	<input type="text" name="textcari" class="newsletter_input" value="<?php if(isset($_POST['textcari'])){ echo $_POST['textcari']; } else { echo "Kata Kunci..."; }?>" onBlur="if(this.value=='') this.value='Kata Kunci...';" onFocus="if(this.value=='Kata Kunci...') this.value='';" /><input type="image" src="images/search.png" width="45" name="cari" style="margin-bottom:-14px;" title="Cari"/>
+    	<input type="text" name="textcari" class="newsletter_input" value="<?php if(isset($_POST['textcari'])){ echo $_POST['textcari']; } else { echo "Kata Kunci..."; }?>" onBlur="if(this.value=='') this.value='Kata Kunci...';" onFocus="if(this.value=='Kata Kunci...') this.value='';" /></td><td>
+        <button name="cari" class="action"/>
+        <span class="icon icon198"></span></button>
     </form>
     </td></tr>
     </table>
@@ -318,10 +322,11 @@ else{
             <td><?php echo $drekening['bank_rekening']; ?></td>
             <td><?php echo $drekening['cabang_rekening']; ?></td>
             <td><?php echo $drekening['no_rekening']; ?></td>
-            <td><a href="?page=rekening&act=edit&idr=<?php echo $drekening['id_rekening']; ?>"><img src="images/user_edit.png" alt="" title="" border="0" /></a></td>
+            <td><a href="?page=rekening&act=edit&idr=<?php echo $drekening['id_rekening']; ?>" title="Ubah">
+                	<span class="icon icon145"></span></a></td>
             <td width="45">
-            	<a href="<?php echo $drekening['id_rekening']; ?>" id="rekening" class="ask">
-                	<img src="images/trash.png" alt="" title="" border="0" />
+            	<a href="<?php echo $drekening['id_rekening']; ?>" id="rekening" class="ask" title="Hapus">
+                	<span class="icon icon186"></span>
                 </a>
             </td>
         <?php

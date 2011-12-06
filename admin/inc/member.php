@@ -15,11 +15,11 @@ else{
 ?>
 
 <table width="100%" style=" margin-top:10px;">
-<tr>
-<td align="right">
-</td>
-<td align="right" width="70%">
 <form method="post" action="">
+<tr>
+<td align="right" width="50%">
+</td>
+<td align="right">
 	<select name="type">
 		<option value="0">Semua</option>
 		<option value="1" <?php if(isset($_POST['type'])){ echo($_POST['type'] == 1)?"selected":""; } ?>>Nama</option>
@@ -28,9 +28,11 @@ else{
 		<option value="4" <?php if(isset($_POST['type'])){ echo($_POST['type'] == 3)?"selected":""; } ?>>Kodepos</option>
 		<option value="5" <?php if(isset($_POST['type'])){ echo($_POST['type'] == 4)?"selected":""; } ?>>Email</option>
 	</select>
-	<input type="text" name="textcari" class="newsletter_input" value="<?php if(isset($_POST['textcari'])){ echo $_POST['textcari']; } else { echo "Kata Kunci..."; }?>" onBlur="if(this.value=='') this.value='Kata Kunci...';" onFocus="if(this.value=='Kata Kunci...') this.value='';" /><input type="image" src="images/search.png" width="45" name="cari" style="margin-bottom:-14px;" title="Cari"/>
-</form>
+	<input type="text" name="textcari" class="newsletter_input" value="<?php if(isset($_POST['textcari'])){ echo $_POST['textcari']; } else { echo "Kata Kunci..."; }?>" onBlur="if(this.value=='') this.value='Kata Kunci...';" onFocus="if(this.value=='Kata Kunci...') this.value='';" /></td><td>
+        <button name="cari" class="action"/>
+        <span class="icon icon198"></span></button>
 </td></tr>
+</form>
 </table>
     <?php
 	if(isset($_POST['type'])){

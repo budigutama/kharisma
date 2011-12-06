@@ -10,40 +10,40 @@ function tgl_indo($tgl){
 function getBulan($bln){
   switch ($bln){
     case 1: 
-      return "Januari";
+      return "Jan";
       break;
     case 2:
-      return "Februari";
+      return "Feb";
       break;
     case 3:
-      return "Maret";
+      return "Mar";
       break;
     case 4:
-      return "April";
+      return "Apr";
       break;
     case 5:
       return "Mei";
       break;
     case 6:
-      return "Juni";
+      return "Jun";
       break;
     case 7:
-      return "Juli";
+      return "Jul";
       break;
     case 8:
-      return "Agustus";
+      return "Agu";
       break;
     case 9:
-      return "September";
+      return "Sep";
       break;
     case 10:
-      return "Oktober";
+      return "Okt";
       break;
     case 11:
-      return "Nopember";
+      return "Nov";
       break;
     case 12:
-      return "Desember";
+      return "Des";
       break;
   }
 }
@@ -140,13 +140,29 @@ function viewcounter($idb){
 }
 
 function konversikedolar($uang){
-	$res=mysql_query("SELECT * FROM kurs WHERE status_kurs = '1'");
+	$res=mysql_query("SELECT * FROM t_kurs WHERE id_kurs = 'USD'");
 	if($res){
 		$data=mysql_fetch_array($res);
-		return $uang/$data['harga_kurs'];
+		return $uang/$data['nilai_kurs'];
 	}
 	else
 		return 0;
+}
+
+function lupapassword($email){
+	$qcheckemail = mysql_query("SELECT * FROM t_member WHERE email_member = '$email'");
+	$ncheckemail = mysql_num_rows($qcheckemail);
+	if($ncheckemail == 1){
+
+		$code = md5(rand(0,9999999));
+		mysql_query("UPDATE t_member SET verificationcode_member = '$code' WHERE email_member = '$email'");
+		emaillupapassword($email,$code);
+		echo "<h3> Verifikasi Password Baru Telah Dikirim Ke Email </h3>";
+	}
+	else
+	{
+		echo "<h3>Email Anda Tidak ditemukan </h3>";
+	}	
 }
 
 function hargadiskon($idb){

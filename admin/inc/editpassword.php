@@ -72,7 +72,9 @@ if(isset($_POST['update'])){
            	<td><input type="password" name="confirm" id="confirm" size="30" maxlength="50" /></td>
         </tr>
        	<tr>
-           	<td colspan="2" align="center"><input type="submit" name="update" class="buton" value="Update" /></td>
+           	<td colspan="2" align="center">
+            <button name="update" class="blue"/><span class="label1">Update</span></button>
+			</td>
         </tr>
     </table>
 </form>

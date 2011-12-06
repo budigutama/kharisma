@@ -18,7 +18,7 @@ class Cezpdf extends Cpdf {
 // Wayne Munro, R&OS Ltd, http://www.ros.co.nz/pdf
 //==============================================================================
 
-var $ez=array('fontSize'=>10); // used for storing most of the page configuration parameters
+var $ez=array('fontSize'=>8); // used for storing most of the page configuration parameters
 var $y; // this is the current vertical positon on the page of the writing point, very important
 var $ezPages=array(); // keep an array of the ids of the pages, making it easy to go back and add page numbers etc.
 var $ezPageCount=0;
@@ -664,7 +664,7 @@ function ezTable(&$data,$cols='',$title='',$options=''){
   }
 
   $defaults = array(
-    'shaded'=>1,'showLines'=>1,'shadeCol'=>array(0.8,0.8,0.8),'shadeCol2'=>array(0.7,0.7,0.7),'fontSize'=>10,'titleFontSize'=>12
+    'shaded'=>1,'showLines'=>1,'shadeCol'=>array(0.8,0.8,0.8),'shadeCol2'=>array(0.7,0.7,0.7),'fontSize'=>9,'titleFontSize'=>10
     ,'titleGap'=>5,'lineCol'=>array(0,0,0),'gap'=>5,'xPos'=>'centre','xOrientation'=>'centre'
     ,'showHeadings'=>1,'textCol'=>array(0,0,0),'width'=>0,'maxWidth'=>0,'cols'=>array(),'minRowSpace'=>-100,'rowGap'=>2,'colGap'=>5
     ,'innerLineThickness'=>1,'outerLineThickness'=>1,'splitRows'=>0,'protectRows'=>1

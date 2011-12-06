@@ -1,57 +1,13 @@
-<!-- TinyMCE -->
-<script type="text/javascript" src="tiny_mce/tiny_mce.js"></script>
-<script type="text/javascript">
-	// O2k7 skin
-	tinyMCE.init({
-		// General options
-		mode : "exact",
-		elements : "balasan",
-		theme : "advanced",
-		skin : "o2k7",
-		plugins : "safari,style,table,print,paste,directionality,fullscreen,nonbreaking,xhtmlxtras,inlinepopups",
-
-		// Theme options
-		theme_advanced_buttons1 : "save,newdocument,|,bold,italic,underline,strikethrough,|,justifyleft,justifycenter,justifyright,justifyfull,formatselect",
-		theme_advanced_buttons2 : "cut,copy,paste,|,bullist,numlist,|,outdent,indent,blockquote,|,undo,redo,|,link,unlink,cleanup,code,|,forecolor,backcolor",
-		theme_advanced_buttons3 : "tablecontrols,|,hr,removeformat,visualaid,|,sub,sup,|,print,|,ltr,rtl,|,fullscreen",
-
-		theme_advanced_toolbar_location : "top",
-		theme_advanced_toolbar_align : "left",
-		theme_advanced_statusbar_location : "bottom",
-		theme_advanced_resizing : false,
-
-		// Example content CSS (should be your site CSS)
-		content_css : "tiny_mce/content.css",
-
-		// Drop lists for link/image/media/template dialogs
-		template_external_list_url : "lists/template_list.js",
-		external_link_list_url : "lists/link_list.js",
-		external_image_list_url : "lists/image_list.js",
-		media_external_list_url : "lists/media_list.js",
-	});
-
-</script>
-<!-- /TinyMCE -->
+<script type="text/javascript" src="inc/textform.js"></script>
 
 <?php
 if(isset($_POST['kirim'])){
 	$email=$_POST['email'];
-	$subjek=$_POST['subjek'];
+	$nama=$_POST['nama'];
 	$isi=$_POST['balasan'];
-	$kepada = "$email";
-	$judul  = "[ tridi.com ] $subjek";
-	$pesan  = "$isi<br />
-			   Terima kasih.<br />
-			   ---<br />
-			   tridi pilar pratama<br />
-			   Store: Graha Mustika Ratu 7th Floor Jl. Gatot Subroto Kav. 74-75 Jakarta 12870<br />
-			   Email: admin@tridi.com<br />
-			   ---";
-					
-	$dari   = "From: admin@tridi.com \r\n";
-	$dari  .= "Reply-To: admin@tridi.com \r\n";
-	$dari  .= "Content-type: text/html \r\n";
-	mail($kepada,$judul,$pesan,$dari);		?>
+	email_bukutamu($email,$nama,$isi);		
+  echo "<div class=sukses>Balasan Buku tamu ke $nama - $email Berhasil Dikirim</div>"; 
+	?>
         <form name="redirect">
  			<input type="hidden" name="redirect2">
   		</form>
@@ -82,29 +38,32 @@ if(isset($_POST['kirim'])){
 if(isset($_GET['act'])){
 	if($_GET['act'] == 'view'){
 	  $idb=$_GET['idb'];
-	  mysql_query("UPDATE buku_tamu SET status='1' WHERE id_tamu='$idb'");
-      $ambildata=mysql_query("SELECT * FROM buku_tamu WHERE id_tamu='$idb'");
+	  mysql_query("UPDATE t_bukutamu SET status_bukutamu='1' WHERE id_bukutamu='$idb'");
+      $ambildata=mysql_query("SELECT * FROM t_bukutamu WHERE id_bukutamu=$idb");
 	  $data=mysql_fetch_array($ambildata);	
 	?>
     <form action="" method="post" class="niceform">
         <table>
             <tr>
                 <td><label for="nama">Nama :</label></td>
-                <td><input type="text" name="nama" id="nama" size="40" maxlength="100" value="<?php echo $data['nama'];?>" readonly/></td>
+                <td><input type="text" name="nama" id="nama" size="40" maxlength="100" value="<?php echo $data['nama_bukutamu'];?>" readonly/></td>
             </tr>
             <tr>
                 <td><label for="email">Email :</label></td>
-                <td><input type="text" name="email" id="email" size="40" maxlength="100" readonly value="<?php echo $data['email'];?>"/></td>
+                <td><input type="text" name="email" id="email" size="40" maxlength="100" readonly value="<?php echo $data['email_bukutamu'];?>"/></td>
             </tr>
             <tr>
                 <td><label for="telp">Tanggal:</label></td>
-                <td><input type="text" name="tgl" id="tgl" size="20" maxlength="15" readonly value="<?php echo tgl_indo($data['tgl_input']);?>"/></td>
+                <td><input type="text" name="tgl" id="tgl" size="20" maxlength="15" readonly value="<?php echo tgl_indo($data['tanggal_bukutamu']);?>"/></td>
             </tr>
             <tr>
                 <td><label for="alamat">Isi Komentar :</label></td>
-                <td><textarea name="isi" id="isi" rows="10" cols="60" readonly><?php echo $data['komentar'];?></textarea></td>
+                <td><textarea name="isi" id="deskripsi" rows="10" cols="60" readonly><?php echo $data['isi_bukutamu'];?></textarea></td>
             </tr>
-                <td colspan="2" align="center"><a href="?page=bukutamu&act=reply&idb=<?php echo $idb;?>"><input type="button" name="balas" value="Reply" /></a></td>
+                <td colspan="2" align="center">
+                <a href="?page=bukutamu&act=reply&idb=<?php echo $idb;?>" class="button blue">
+                <span class="label1">Balas</span></a>
+                <a class="button red" href="?page=bukutamu"/><span class="label1">Batal</span></a></td>
             </tr>
         </table>
 	</form>
@@ -112,24 +71,27 @@ if(isset($_GET['act'])){
 	}
 	elseif($_GET['act'] == 'reply'){
 	  $idb=$_GET['idb'];
-      $ambildata=mysql_query("SELECT * FROM buku_tamu WHERE id_tamu='$idb'");
+      $ambildata=mysql_query("SELECT * FROM t_bukutamu WHERE id_bukutamu='$idb'");
 	  $data=mysql_fetch_array($ambildata);	
 	?>
-    <form action="" method="post" class="niceform">
+    <form action="" method="post">
         <table>
             <tr>
                 <td><label for="nama">Kepada :</label></td>
-                <td><input type="text" name="email" id="email" size="40" maxlength="100" value="<?php echo $data['email'];?>" readonly/></td>
+                <td><input type="text" name="email" value="<?php echo $data['email_bukutamu'];?>" readonly/></td>
             </tr>
             <tr>
-                <td><label for="email">Subjek :</label></td>
-                <td><input type="text" name="subjek" id="subjek" size="40" maxlength="100"</td>
+                <td><label for="email">Nama  :</label></td>
+                <td><input type="text" name="nama" value="<?php echo $data['nama_bukutamu'];?>" readonly/></td>
             </tr>
             <tr>
                 <td><label for="alamat">Isi Balasan :</label></td>
-                <td><textarea name="balasan" id="balasan" rows="8" cols="60"></textarea></td>
+                <td><textarea name="balasan" id="deskripsi" rows="8" cols="60"></textarea></td>
             </tr>
-                <td colspan="2" align="center"><input type="submit" name="kirim" value="Send" /></td>
+                <td colspan="2" align="center">
+                	<button name="kirim" class="blue"/><span class="label1">Kirim</span></button>
+                    <a class="button red" href="?page=bukutamu"/><span class="label1">Batal</span></a>
+                </td>
             </tr>
         </table>
 	</form>
@@ -150,25 +112,33 @@ else
 		$posisi = ($halaman-1) * $batas;
 	}
 	?>
-	
-    Cari Berdasarkan :
-    <form method="post" action="">
+<table width="100%" style=" margin-top:10px;">
+<form method="post" action="">
+<tr>
+<td align="right" width="50%">
+</td>
+<td align="right">
     	<select name="type">
         	<option value="0">Semua</option>
         	<option value="1" <?php if(isset($_POST['type'])){ echo($_POST['type'] == 1)?"selected":""; } ?>>Nama</option>
             <option value="2" <?php if(isset($_POST['type'])){ echo($_POST['type'] == 2)?"selected":""; } ?>>Tanggal</option>
         </select>
-    	<input type="text" name="textcari" value="<?php if(isset($_POST['textcari'])){ echo $_POST['textcari']; } else { echo "Keyword..."; }?>" onBlur="if(this.value=='') this.value='Keyword...';" onFocus="if(this.value=='Keyword...') this.value='';" /><input type="submit" name="cari" value="Cari" />
-    </form>
+    	<input type="text" name="textcari" value="<?php if(isset($_POST['textcari'])){ echo $_POST['textcari']; } else { echo "Keyword..."; }?>" onBlur="if(this.value=='') this.value='Keyword...';" onFocus="if(this.value=='Keyword...') this.value='';" />
+        </td><td>
+        <button name="cari" class="action"/>
+        <span class="icon icon198"></span></button>
+</td></tr>
+</form>
+</table>
     <?php
 	if(isset($_POST['type'])){
 		$type = addslashes($_POST['type']);
 		if($type == 0)
 			$sqlquery = "";
 		elseif($type == 1)
-			$sqlquery = "AND nama LIKE '%$_POST[textcari]%'";
+			$sqlquery = "AND nama_bukutamu LIKE '%$_POST[textcari]%'";
 		elseif($type == 2)
-			$sqlquery = "AND tgl_input LIKE '%$_POST[textcari]%'";
+			$sqlquery = "AND tanggal_bukutamu LIKE '%$_POST[textcari]%'";
 	}
 	else{
 		$sqlquery = "";	
@@ -182,8 +152,8 @@ else
 				<th width="444" class="rounded" scope="col">Email</th>
 				<th width="444" class="rounded" scope="col" align="center">Tanggal</th>
                 <th width="45" class="rounded" scope="col" align="center">Status</th>
-				<th width="45" class="rounded" scope="col" align="center">View</th>
-				<th width="45" class="rounded-q4" scope="col" align="center">Delete</th>
+				<th width="45" class="rounded" scope="col" align="center">Lihat</th>
+				<th width="45" class="rounded-q4" scope="col" align="center">Hapus</th>
 			</tr>
 		</thead>
 		<tfoot>
@@ -191,7 +161,7 @@ else
 		<tbody>
 			<?php
 			$no = 0;
-			$qbukutamu = mysql_query("SELECT * FROM buku_tamu
+			$qbukutamu = mysql_query("SELECT * FROM t_bukutamu
 									WHERE 1
 									$sqlquery LIMIT $posisi,$batas");
 			$kolom=1;
@@ -199,29 +169,28 @@ else
 			$no = $posisi+1;
 			while($dbukutamu = mysql_fetch_array($qbukutamu)){
 				if ($i >= $kolom){
-					echo "<tr class='row$dbukutamu[id_tamu]'>";
+					echo "<tr class='row$dbukutamu[id_bukutamu]'>";
 				}
 			?>
 				<td><?php echo $no; ?></td>
-				<td><?php echo $dbukutamu['nama']; ?></td>
-				<td><?php echo $dbukutamu['email']; ?></td>
-				<td align="center"><?php echo tgl_indo($dbukutamu['tgl_input']); ?></td>
+				<td><?php echo $dbukutamu['nama_bukutamu']; ?></td>
+				<td><?php echo $dbukutamu['email_bukutamu']; ?></td>
+				<td align="center"><?php echo tgl_indo($dbukutamu['tanggal_bukutamu']); ?></td>
                 <td align="center">
 					<?php
-					if($dbukutamu['status'] == 1){
-                    	echo "<img src='images/y.png' border='0' alt='Sudah Dibaca' title='Sudah Dibaca' />";
-					}
-					elseif($dbukutamu['status'] == 0){
-                    	echo "<img src='images/n.png' border='0' alt='Belum Dibaca' title='Belum Dibaca' />";
+					if($dbukutamu['status_bukutamu'] == 1){ ?>
+                    	<a title="Sudah Dibaca"><span class="icon icon44"></span></a>
+					<?php }
+					elseif($dbukutamu['status_bukutamu'] == 0){
+                    	echo "<a title='Belum Doibaca'><span class='icon icon35'></span></a>";
 					}
 					?>
-				<td align="center"><a href="?page=bukutamu&act=view&idb=<?php echo $dbukutamu['id_tamu']; ?>" title="View">
-                    	<img src="images/view.png" alt="" title="" border="0" />
-                    </a></td>
+				<td align="center"><a href="?page=bukutamu&act=view&idb=<?php echo $dbukutamu['id_bukutamu']; ?>" title="Lihat">
+                    	<span class="icon icon84"></span></a>
+                   </td>
 				<td width="45" align="center">
-					<a href="<?php echo $dbukutamu['id_tamu']; ?>" id="buku_tamu" class="ask" title="Delete"> 
-						<img src="images/trash.png" alt="" title="" border="0" />
-					</a>
+					<a href="<?php echo $dbukutamu['id_bukutamu']; ?>" id="buku_tamu" class="ask" title="Hapus"> 
+						<span class="icon icon186"></span></a>
 				</td>
 			<?php
 			$i++;
@@ -236,7 +205,7 @@ else
 	
 	<div class="pagination">
 	<?php
-	$tampil2 = mysql_query("SELECT * FROM buku_tamu
+	$tampil2 = mysql_query("SELECT * FROM t_bukutamu
 							WHERE 1
 							$sqlquery");
 	$jmldata = mysql_num_rows($tampil2);
@@ -287,6 +256,5 @@ else
 } //end of else or !isset($_GET['act'])
 	?>
      
-     <h2>&nbsp;</h2>
 </body>
 </html>

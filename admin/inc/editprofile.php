@@ -95,7 +95,9 @@ $dadmin = mysql_fetch_array($qadmin);
            	<td><textarea name="alamat" id="alamat" rows="5" cols="60"><?php echo $dadmin['alamat_admin']; ?></textarea></td>
         </tr>
        	<tr>
-           	<td colspan="2" align="center"><input type="submit" name="update" class="buton" value="Update" /></td>
+           	<td colspan="2" align="center">
+            <button name="update" class="blue"/><span class="label1">Update</span></button>
+            </td>
         </tr>
     </table>
 </form>

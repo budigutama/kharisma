@@ -155,8 +155,9 @@ if(isset($_GET['act'])){
             </tr>
         	<tr>
             	<td colspan="2" align="center">
-                <input type="submit" name="save" value="Simpan" class="buton"/>
-                <input type="reset" name="reset" value="Batal" onClick="window.location = '?page=ongkir';"  class="buton"/></td>
+                	<button name="save" class="blue"/><span class="label1">Simpan</span></button>
+                    <a class="button red" href="?page=ongkir"/><span class="label1">Batal</span></a>
+				</td>
             </tr>
         </table>
 	</form>
@@ -230,8 +231,9 @@ if(isset($_GET['act'])){
             </tr>
         	<tr>
             	<td colspan="2" align="center">
-                <input type="submit" name="update" value="Ubah"  class="buton"/>
-                <input type="reset" name="reset" value="Batal" onClick="window.location = '?page=ongkir';" class="buton" /></td>
+                	<button name="update" class="blue"/><span class="label1">Ubah</span></button>
+                    <a class="button red" href="?page=jeniskirim"/><span class="label1">Batal</span></a>
+				</td>
             </tr>
         </table>
 	</form>
@@ -240,7 +242,7 @@ if(isset($_GET['act'])){
 }
 else
 {
-$batas   = 10;
+$batas   = 20;
 if(isset($_GET['halaman']))
 	$halaman = $_GET['halaman'];
 	
@@ -255,7 +257,8 @@ else{
 	<table width="100%" style=" margin-top:10px;">
     <tr>
     <td align="right">
-	<a href="?page=ongkir&act=add" class="buton">Tambah Ongkos Kirim</a>
+	<a href="?page=ongkir&act=add" class="button blue">
+    <span class="label1">Tambah Ongkos Kirim</span></a>
     </td>
     <td align="right" width="70%">
     <form method="post" action="">
@@ -264,7 +267,9 @@ else{
         	<option value="1" <?php if(isset($_POST['type'])){ echo($_POST['type'] == 1)?"selected":""; } ?>>Kota</option>
             <option value="2" <?php if(isset($_POST['type'])){ echo($_POST['type'] == 2)?"selected":""; } ?>>Provinsi</option>
         </select>
-    	<input type="text" name="textcari" class="newsletter_input" value="<?php if(isset($_POST['textcari'])){ echo $_POST['textcari']; } else { echo "Kata Kunci..."; }?>" onBlur="if(this.value=='') this.value='Kata Kunci...';" onFocus="if(this.value=='Kata Kunci...') this.value='';" /><input type="image" src="images/search.png" width="45" name="cari" style="margin-bottom:-14px;" title="Cari"/>
+    	<input type="text" name="textcari" class="newsletter_input" value="<?php if(isset($_POST['textcari'])){ echo $_POST['textcari']; } else { echo "Kata Kunci..."; }?>" onBlur="if(this.value=='') this.value='Kata Kunci...';" onFocus="if(this.value=='Kata Kunci...') this.value='';" /></td><td>
+        <button name="cari" class="action"/>
+        <span class="icon icon198"></span></button>
     </form>
     </td></tr>
     </table>
@@ -320,12 +325,11 @@ else{
             <td><?php echo $dongkir['nama_kota']; ?></td>
             <td><?php echo $dongkir['nama_forwarder'].' - '.$dongkir['nama_jeniskirim']; ?></td>
             <td>Rp. <?php echo number_format($dongkir['harga_ongkir'],"2",".",","); ?></td>
-            <td><a href="?page=ongkir&act=edit&idok=<?php echo $dongkir['id_ongkir']; ?>"><img src="images/user_edit.png" alt="" title="" border="0" /></a></td>
+            <td><a href="?page=ongkir&act=edit&idok=<?php echo $dongkir['id_ongkir']; ?>" title="Ubah">
+                	<span class="icon icon145"></span></a></td>
             <td width="45">
-            	<a href="<?php echo $dongkir['id_ongkir']; ?>" id="ongkir" class="ask">
-                	<img src="images/trash.png" alt="" title="" border="0" />
-                </a>
-            </td>
+            	<a href="<?php echo $dongkir['id_ongkir']; ?>" id="ongkir" class="ask" title="Hapus">
+                	<span class="icon icon186"></span></a></td>
         <?php
 		$i++;
 		$no++;

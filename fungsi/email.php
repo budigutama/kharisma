@@ -303,7 +303,7 @@ function emailbayar($id_pembelian){
 }
 
 function emailkonfirmasi($id_pembelian){
-	$qdetailpembelian = mysql_query("SELECT * FROM pembelian as a, rekening as b, member as c
+	$qdetailpembelian = mysql_query("SELECT * FROM t_pembelian a, t_rekening b, t_member c
 							WHERE a.id_rekening = b.id_rekening
 							AND a.id_member=c.id_member
 							AND a.id_pembelian = '$id_pembelian'
@@ -381,7 +381,7 @@ function emailkonfirmasi($id_pembelian){
 }
 
 function emailresi($id_pembelian){
-	$querycustomer = mysql_query("SELECT * FROM pembelian a, member b 
+	$querycustomer = mysql_query("SELECT * FROM t_pembelian a, t_member b 
 								 WHERE a.id_member=b.id_member 
 								 AND a.id_pembelian = '$id_pembelian'");
 	$datacustomer = mysql_fetch_array($querycustomer);
@@ -404,8 +404,10 @@ function emailresi($id_pembelian){
 			   Main Office: Jl. buah batu no. 238 Bandung Jawa Barat.<br />
 			   Email: admin@tokomusikkharisma.com<br />
 			   ---";
-	$pesanadmin   = "Pesanan dengan Id Pembelian : $id_pembelian, Oleh : $datacustomer[email_member] <br />
-					Telah dikirim kealamat member dengan No Resi : <b>$datacustomer[kirim_resi].</b>";	
+	$pesanadmin   = "Nomor Resi Pengiriman Pesanan:
+					Id Pembelian 	 : $id_pembelian <br/>
+					Pembeli / Member : $datacustomer[nama_member] - $datacustomer[email_member]<br />
+					No Resi 		 : <b>$datacustomer[kirim_resi].</b>";	
 	$dari   = "From: admin@tokomusikkharisma.com \r\n";
 	$dari  .= "Reply-To: admin@tokomusikkharisma.com \r\n";
 	$dari  .= "Content-type: text/html \r\n";
@@ -512,32 +514,8 @@ function emailbayarpaypal($id_pembelian,$payer,$recipe){
 	emailkeadmin($judul,$keadmin.$pesan,$dari);
 }
 
-function emaillupapassword($email,$verifikasi){
-	$qemail = mysql_query("SELECT * FROM member WHERE email_member = '$email'");
-	$demail = mysql_fetch_array($qemail);
-	$kepada = "$email";
-	$judul  = "[ tokomusikkharisma.com ] Verifikasi Permintaan Password Baru";
-	$pesan  = "Kepada Yth. Sdr/i. $demail[nama_member],<br />
-			   <br />
-			   Untuk Melakukan Perubahan Password Akun Anda, Silahkan Klik Link Dibawah Ini<br />
-			   <a href='http://tokomusikkharisma.com/index.php?page=lupapassword&code=$verifikasi'>http://tokomusikkharisma.com/index.php?page=lupapassword&code=$verifikasi</a><br />
-			   Jika tidak berjalan dengan baik, Silahkan Copy link diatas ke Url Anda.
-			   <br />
-			   <br />
-			   Terima kasih atas kepercayaan Anda.<br /><br />
-			   ---<br />
-			   tokomusikkharisma.com<br />
-			   Main Office: Jl. buah batu no. 238 Bandung Jawa Barat.<br />
-			   Email: admin@tokomusikkharisma.com<br />
-			   ---";
-	$dari   = "From: admin@tokomusikkharisma.com \r\n";
-	$dari  .= "Reply-To: admin@tokomusikkharisma.com \r\n";
-	$dari  .= "Content-type: text/html \r\n";
-	mail($kepada,$judul,$pesan,$dari);	
-}
-
 function emailprodukditerima($id_pembelian){
-	$querycustomer = mysql_query("SELECT * FROM pembelian a, member b 
+	$querycustomer = mysql_query("SELECT * FROM t_pembelian a, t_member b 
 								 WHERE a.id_member=b.id_member
 								 AND a.id_pembelian = '$id_pembelian'");
 	$datacustomer = mysql_fetch_array($querycustomer);
@@ -575,20 +553,20 @@ function emailprodukditerima($id_pembelian){
 						<tr>
 						  <th style='background-color:#999'>No.</th>
 						  <th style='background-color:#999'>Nama produk</th>
+						  <th style='background-color:#999'>Merek</th>
 						  <th style='background-color:#999'>Warna</th>
-						  <th style='background-color:#999'>Ukuran</th>
 						  <th style='background-color:#999'>Harga</th>
 						  <th style='background-color:#999'>Berat</th>
 						  <th style='background-color:#999'>Stok</th>
 						  <th style='background-color:#999'>Jumlah</th>
 						</tr>";
 	
-	$qcart = mysql_query("SELECT * FROM pembelian as a, detail_pembelian as b, detailproduk as c, produk as d, warna as e, ukuran as f
-						  WHERE a.id_pembelian = b.idpembelian
+	$qcart = mysql_query("SELECT * FROM t_pembelian a, t_detail_pembelian b, t_detailproduk c, t_produk d, t_warna e, t_merek f
+						  WHERE a.id_pembelian = b.id_pembelian
 						  AND b.id_detailproduk = c.id_detailproduk
 						  AND c.id_produk = d.id_produk
 						  AND c.id_warna = e.id_warna
-						  AND c.id_ukuran = f.id_ukuran
+						  AND d.id_merek = f.id_merek
 						  AND a.id_pembelian = '$id_pembelian'");
 	$no = 0;
 	$total = 0;
@@ -602,19 +580,19 @@ function emailprodukditerima($id_pembelian){
 	$pesan .="  <tr>
 					  <td>$no.</td>
 					  <td>$dcart[nama_produk]</td>
+					  <td>$dcart[nama_merek]</td>
 					  <td>$dcart[nama_warna]</td>
-					  <td>$dcart[nama_ukuran]</td>
 					  <td align='right'>Rp".number_format($dcart['hargabeli'],"2",",",".")."</td>
-					  <td>$dcart[berat]</td>
-					  <td>$dcart[qty]</td>
+					  <td align=center>$dcart[berat]</td>
+					  <td align=center>$dcart[qty]</td>
 					  <td align='right'>Rp".number_format(($dcart['hargabeli']*$dcart['qty']),"2",",",".")."</td>
 			    </tr>";
 	}
-	$total = $total + ($ongkos*(int)ceil($qb));
+	$total = $total + $ongkos;
 	
 	$pesan .="<tr style='background-color:#ccc'>
-				  <td colspan='7'>Ongkos Kirim (".(int)ceil($qb)." x Rp ".number_format($ongkos,"2",",",".").")</td>
-				  <td align='right'>Rp".number_format(($ongkos*(int)ceil($qb)),"2",",",".")."</td>
+				  <td colspan='7'>Ongkos Kirim </td>
+				  <td align='right'>Rp".number_format($ongkos,"2",",",".")."</td>
 			</tr>
 			<tr>
 				  <td colspan='7'>Total</td>
@@ -638,9 +616,9 @@ function emailprodukditerima($id_pembelian){
 	mail($kepada,$judul,$pesan,$dari);
 }
 
-function email_hubungi($email,$nama,$isi){
+function email_bukutamu($email,$nama,$isi){
 	$kepada = "$email";
-	$judul  = "[ tokomusikkharisma.com ] Balasan";
+	$judul  = "[ tokomusikkharisma.com ] Balasan Buku Tamu";
 	$pesan  = "Kepada Yth. Sdr/i. $nama,<br />
 			   <br />
 			   Terimakasih atas kritik dan sarannya kepada kami, kami akan berusaha untuk selalu meningkatkan mutu pelayanan kami.<br>
@@ -654,16 +632,10 @@ function email_hubungi($email,$nama,$isi){
 			   Main Office: Jl. buah batu no. 238 Bandung Jawa Barat.<br />
 			   Email: admin@tokomusikkharisma.com<br />
 			   ---";
-	$pesanadmin ="Dear Admin <br />
-				Telah diterima kritik dan saran dari $email sebagai berikut :<br />
-				$isi
-				<br />
-				";
 	$dari   = "From: admin@tokomusikkharisma.com \r\n";
 	$dari  .= "Reply-To: admin@tokomusikkharisma.com \r\n";
 	$dari  .= "Content-type: text/html \r\n";
 	mail($kepada,$judul,$pesan,$dari);
-	emailkeadmin($judul,$pesanadmin,$dari);
 }
 
 function emaillupasadmin($email,$verifikasi){
@@ -677,6 +649,30 @@ function emaillupasadmin($email,$verifikasi){
 			   <a href='http://tokomusikkharisma.com/admin/login.php?code=$verifikasi'>http://tokomusikkharisma.com/admin/login.php?code=$verifikasi</a><br />
 			   Jika tidak berjalan dengan baik, Silahkan Copy link diatas ke Url Anda.
 			   <br />
+			   ---<br />
+			   tokomusikkharisma.com<br />
+			   Main Office: Jl. buah batu no. 238 Bandung Jawa Barat.<br />
+			   Email: admin@tokomusikkharisma.com<br />
+			   ---";
+	$dari   = "From: admin@tokomusikkharisma.com \r\n";
+	$dari  .= "Reply-To: admin@tokomusikkharisma.com \r\n";
+	$dari  .= "Content-type: text/html \r\n";
+	mail($kepada,$judul,$pesan,$dari);	
+}
+
+function emaillupapassword($email,$verifikasi){
+	$qemail = mysql_query("SELECT * FROM t_member WHERE email_member = '$email'");
+	$demail = mysql_fetch_array($qemail);
+	$kepada = "$email";
+	$judul  = "[ tokomusikkharisma.com ] Verifikasi Permintaan Password Baru";
+	$pesan  = "Kepada Yth. Sdr/i. $demail[nama_member],<br />
+			   <br />
+			   Untuk Melakukan Perubahan Password Akun Anda, Silahkan Klik Link Dibawah Ini<br />
+			   <a href='http://tokomusikkharisma.com/index.php?page=lupapassword&code=$verifikasi'>http://tokomusikkharisma.com/index.php?page=lupapassword&code=$verifikasi</a><br />
+			   Jika tidak berjalan dengan baik, Silahkan Copy link diatas ke Url Anda.
+			   <br />
+			   <br />
+			   Terima kasih atas kepercayaan Anda.<br /><br />
 			   ---<br />
 			   tokomusikkharisma.com<br />
 			   Main Office: Jl. buah batu no. 238 Bandung Jawa Barat.<br />

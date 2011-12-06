@@ -150,10 +150,6 @@
 														AND b.id_jeniskirim=$datacustom[id_jeniskirim]")); 
 					echo "$kirim[nama_forwarder] - jenis $kirim[nama_jeniskirim]";?></td>
             </tr>
-            <tr>
-            	<td width="160px">No. Resi Pengiriman</td>
-            	<td> :<?php echo $datacustom['kirim_resi'];?></td>
-            </tr>
             </table>  
          </div> 
          <hr />

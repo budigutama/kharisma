@@ -17,7 +17,7 @@ anylinkcssmenu.init("anchorclass")
 				echo "<li class='even'>";
 			} ?>
 		<a href='#' class="anchorclass someotherclass" rel="submenu2" rev="lr">
-        <span class='icon icon64' style='margin-top:3px;'></span><?php echo $datacat[nama_kategori]; ?>
+        <span class='icon icon64' style='margin-top:3px;'></span><?php echo $datacat['nama_kategori']; ?>
         </a>
            <div id="submenu2" class="anylinkcss">
            <ul>

@@ -28,12 +28,20 @@
     <a class="menuitem submenuheader" href="#">Laporan Penjualan</a>
     <div class="submenu">
         <ul>
-            <li><a href="?page=laporanharian">Laporan Harian</a></li>
-            <li><a href="?page=laporanbulanan">Laporan Bulanan</a></li>
-            <li><a href="?page=laporantahunan">Laporan Tahunan</a></li>	
+            <li><a href="?page=laporan_penjualan&per=hari">Laporan Harian</a></li>
+            <li><a href="?page=laporan_penjualan&per=bulan">Laporan Bulanan</a></li>
+            <li><a href="?page=laporan_penjualan&per=tahun">Laporan Tahunan</a></li>	
         </ul>
     </div>
     <a class="menuitem" href="?page=laporan_produk">Laporan Produk</a>
+    <a class="menuitem" href="?page=bukutamu">Buku Tamu</a>
+    <a class="menuitem submenuheader" href="#">Backup - Restore</a>
+    <div class="submenu">
+        <ul>
+            <li><a href="?page=backup_restore&aksi=db">Database</a></li>
+            <li><a href="?page=backup_restore&aksi=sis">Sistem</a></li>
+        </ul>
+    </div>
     <a class="menuitem" href="?page=logout">Logout</a>
 </div>
 <div class="sidebar_box"></div>

@@ -1,5 +1,5 @@
 <?php
-include("../../lib_func/config.php");
+include("../../fungsi/db_koneksi.php");
 include ('class.ezpdf.php');
 	$iddp = $_POST['iddp'];
 	
@@ -16,7 +16,7 @@ $pdf->addJpegFromFile('../images/logo.jpg',14,335,34);
 $pdf->addText(200,335,8,'Tanggal:' . date( 'd-m-Y '));
 
 // Teks di tengah atas untuk judul header
-		$sql = mysql_query("SELECT * FROM pembelian a, kota b
+		$sql = mysql_query("SELECT * FROM t_pembelian a, t_kota b
 							WHERE a.kirim_kota=b.id_kota
 							AND a.id_pembelian = $iddp");
 		$r = mysql_fetch_array($sql);
@@ -42,8 +42,8 @@ $pdf->line(290, 225, 290,170);
 $pdf->line(10, 170, 290, 170);
 
 $pdf->addText(13, 213, 12,'<b>Dari :</b>');
-$pdf->addText(13, 205, 10,'<b>Elitez Distro Bandung</b>');
-$pdf->addText(13, 195, 10,'<b>Alamat   : Jl. buah batu no. 238 Bandung</b>');
+$pdf->addText(13, 205, 10,'<b>Toko Alat Musik KHARISMA</b>');
+$pdf->addText(13, 195, 10,'<b>Alamat   : indramayu</b>');
 $pdf->addText(13, 185, 10,'<b>           Jawa Barat</b>');
 $pdf->addText(13, 175, 10,'<b>Telpon   : 022 - 6976 0117</b>');
 

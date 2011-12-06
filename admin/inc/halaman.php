@@ -14,15 +14,14 @@ if(isset($_GET['page'])){
 		case "member" 				: include "inc/member.php";break;
 		case "rekening" 			: include "inc/rekening.php";break;
 		case "ongkir"	 			: include "inc/ongkir.php";break;
-		case "kurs"		 			: include "inc/kurs.php";break;
+		case "bukutamu"		 		: include "inc/bukutamu.php";break;
 		case "jeniskirim"	 	    : include "inc/jeniskirim.php";break;
 		case "transaksi"			: include "inc/transaksi.php";break;
-		case "laporanharian"	 	: include "inc/laporanharian.php";break;
-		case "laporanbulanan"	 	: include "inc/laporanbulanan.php";break;
-		case "laporantahunan"	 	: include "inc/laporantahunan.php";break;
+		case "laporan_penjualan"	: include "inc/laporan_penjualan.php";break;
 		case "laporan_produk"	 	: include "inc/laporan_produk.php";break;
 		case "editprofile" 			: include "inc/editprofile.php";break;
 		case "editpassword"			: include "inc/editpassword.php";break;
+		case "backup_restore"		: include "inc/backup_restore.php";break;
 		case "logout"					:mysql_query("UPDATE t_admin SET status_login = '0' WHERE id_admin = '$_SESSION[id_admin]'");
 										session_destroy();
 							  			echo "<script>window.location = 'index.php';</script>";

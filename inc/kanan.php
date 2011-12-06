@@ -24,11 +24,11 @@
 
 <div class="border_box">
         <div class="title_box">Layanan Konsumen</div>  
-         <div class="product_img"><a href="http://www.facebook.com/elitez" title="Join to Our Pages on Facebook">
+         <div class="product_img"><a href="http://www.facebook.com/tokomusikkharisma" title="Join to Our Pages on Facebook">
          <img src="gambar/fb2.png" alt="Join facebook" width="60" height="60" border="0" title="" /></a>
-         <a href="http://www.twitter.com/elitez" title="Follow Our Twitter @elitez">
+         <a href="http://www.twitter.com/tokomusikkharisma" title="Follow Our Twitter @tokomusikkharisma">
          <img src="gambar/twitter2.png" alt="follow Us" width="60" height="60" border="0" title="" /></a></div>
-         <div class="product_title"><a href="#">Yahoo messenger</a></div>
+         <div class="product_title">Yahoo messenger</div>
          <div class="product_img"><a href="ymsgr:sendIM?mrbudy_88"><img src="http://opi.yahoo.com/online?u=mrbudy_88&amp;m=g&amp;t=13&amp;rand=1276558051" width="125" height="85" border="0"></a></div>
      </div>  
  

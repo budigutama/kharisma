@@ -53,7 +53,7 @@
             while($datacart = mysql_fetch_array($querycart)){
                 $subtotal = $subtotal + ($datacart['qty'] * $datacart['hargabeli']);
                 $stokberat =  $stokberat + ($datacart['qty'] * $datacart['berat']);
-                $total = $subtotal + ((int)ceil($stokberat) * $datacart['kirim_ongkos']);
+                $total = $subtotal +  $datacart['kirim_ongkos'];
             }
           ?>
             <tr>

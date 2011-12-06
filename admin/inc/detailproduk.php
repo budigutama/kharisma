@@ -208,8 +208,9 @@ if(isset($_GET['act'])){
             </tr>
         	<tr>
             	<td colspan="2" align="center">
-                <input type="submit" name="save" class="buton" value="Simpan" />
-              <input type="reset" name="reset" value="Batal" class="buton" onClick="window.location = '?page=detailproduk&idp=<?php echo $idp; ?>';" /></td>
+                <button name="save" class="blue"/><span class="label1">Simpan</span></button>
+                <a class="button red" href="?page=detailproduk&idp=<?php echo $idp; ?>"/><span class="label1">Batal</span></a>
+            </td>
             </tr>
         </table>
 	</form>
@@ -254,8 +255,10 @@ if(isset($_GET['act'])){
                 <td><input name="berat" id="berat" size="3" maxlength="6" value="<?php echo $ddetailproduk['berat_detailproduk']; ?>" class="inputan"/>&nbsp;<strong>Kg</strong></td>
             </tr>
         	<tr>
-            	<td colspan="2" align="center"><input type="hidden" name="id_detailproduk" value="<?php echo $id_detailproduk; ?>" />
-                	<input type="submit" name="update" class="buton" value="Ubah" /><input type="reset" class="buton" name="reset" value="Batal" onClick="window.location = '?page=detailproduk&idp=<?php echo $idp; ?>';" />
+            	<td colspan="2" align="center">
+                <input type="hidden" name="id_detailproduk" value="<?php echo $id_detailproduk; ?>" />
+                <button name="update" class="blue"/><span class="label1">Ubah</span></button>
+                <a class="button red" href="?page=detailproduk&idp=<?php echo $idp; ?>"/><span class="label1">Batal</span></a>
                 </td>
             </tr>
         </table>
@@ -310,8 +313,8 @@ while ($g=mysql_fetch_array($qgbr)){
             <th width="200" class="rounded" scope="col">Tanggal Input</th>
             <th width="50" class="rounded" scope="col">Berat</th>
             <th width="50" class="rounded" scope="col">Stok</th>
-            <th width="42" class="rounded" scope="col">Ubah</th>
-            <th width="45" class="rounded-q4" scope="col">Hapus</th>
+            <th width="36" class="rounded" scope="col">Ubah</th>
+            <th width="36" class="rounded-q4" scope="col">Hapus</th>
         </tr>
     </thead>
         <tfoot>
@@ -341,14 +344,11 @@ while ($g=mysql_fetch_array($qgbr)){
             <td><?php echo $ddetailproduk['berat_detailproduk']; ?> Kg</td>
             <td><?php echo $ddetailproduk['stok_detailproduk']; ?> Pcs</td>
             <td>
-            	<a href="?page=detailproduk&act=edit&idb=<?php echo $ddetailproduk['id_detailproduk']; ?>&idp=<?php echo $idp; ?>">
-                	<img src="images/user_edit.png" alt="" title="" border="0" />
-                </a>
+            	<a href="?page=detailproduk&act=edit&idb=<?php echo $ddetailproduk['id_detailproduk']; ?>&idp=<?php echo $idp; ?>" title="Ubah"><span class="icon icon145"></span></a>
             </td>
             <td width="45">
-            	<a href="<?php echo $ddetailproduk['id_detailproduk']; ?>" id="detailproduk" class="ask">
-                	<img src="images/trash.png" alt="" title="" border="0" />
-                </a>
+            	<a href="<?php echo $ddetailproduk['id_detailproduk']; ?>" id="detailproduk" class="ask" title="Hapus">
+                	<span class="icon icon186"></span></a>
             </td>
         <?php
 		$i++;
@@ -361,8 +361,8 @@ while ($g=mysql_fetch_array($qgbr)){
     </tbody>
 </table>
 <br />
-<a href="?page=detailproduk&act=add&idp=<?php echo $idp;?>"><span class="buton">Tambah Detail produk</span></a>
-<a href="?page=produk"><span class="buton">Kembali</span></a>    <br /><br /><br />
+<a href="?page=detailproduk&act=add&idp=<?php echo $idp;?>"class="button blue"><span class="label1">Tambah Produk</span></a>
+<a href="?page=produk"class="button red"><span class="label1">Kembali</span></a>   <br /><br /><br />
     <hr width="100%" align="left"/>
     <h4>Tambah Gambar</h4>
     <form method="post" action="" enctype="multipart/form-data">
@@ -387,7 +387,7 @@ while ($g=mysql_fetch_array($qgbr)){
     	</tr>
         <tr align="center">
         	<td>
-            	<input type="submit" name="tambah" class="buton" value="Simpan Gambar" />
+            	<button name="tambah" class="blue"/><span class="label1">Simpan Gambar</span></button>
             </td>
     	</tr>
     </table>

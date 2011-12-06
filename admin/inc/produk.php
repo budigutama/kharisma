@@ -38,6 +38,7 @@
 			});
 		});
 </script>
+<script type="text/javascript" src="inc/textform.js"></script>
 <h2>Pengolahan Data Produk</h2> 
 <?php
 include "class.phpmailer.php";
@@ -306,8 +307,9 @@ if(isset($_GET['act'])){
             </tr>-->
             <tr>
                 <td colspan="2" align="center">
-                <input type="submit" name="save" value="Simpan" class="buton"/>
-                <input type="reset" name="reset" value="Batal" onClick="window.location = '?page=produk';" class="buton"/></td>
+                	<button name="save" class="blue"/><span class="label1">Simpan</span></button>
+                    <a class="button red" href="?page=produk"/><span class="label1">Batal</span></a>
+                </td>
             </tr>
         </table>
 	</form>
@@ -389,7 +391,8 @@ if(isset($_GET['act'])){
 					<?php
                     if($dgambar['profile_gambar'] != 1){
                     ?>
-                        <a href="?page=produk&act=delgambar&idg=<?php echo $dgambar['id_gambar']; ?>"><img src="images/trash.png" alt="" title="" border="0" /></a>
+                        <a href="?page=produk&act=delgambar&idg=<?php echo $dgambar['id_gambar']; ?>">
+                        <img src="images/trash.png" alt="" title="" border="0" /></a>
                     <?php
                     }
                     ?>
@@ -404,8 +407,9 @@ if(isset($_GET['act'])){
 			?>
             <tr>
                 <td colspan="3" align="center">
-                <input type="submit" name="update" value="Ubah" class="buton"/>
-                <input type="reset" name="reset" value="Batal" onClick="window.location = '?page=produk';" class="buton"/></td>
+                	<button name="update" class="blue"/><span class="label1">Ubah</span></button>
+                    <a class="button red" href="?page=produk"/><span class="label1">Batal</span></a>
+                </td>
             </tr>
         </table>
 	</form>
@@ -438,7 +442,8 @@ else
 	<table width="100%" style=" margin-top:10px;">
     <tr>
     <td align="right">
-	<a href="?page=produk&act=add" class="buton">Tambah Produk</a>
+	<a href="?page=produk&act=add" class="button blue">
+    <span class="label1">Tambah Produk</span></a>
     </td>
     <td align="right" width="70%">
     <form method="post" action="">
@@ -446,7 +451,9 @@ else
         	<option value="0">Semua</option>
         	<option value="1" <?php if(isset($_POST['type'])){ echo($_POST['type'] == 1)?"selected":""; } ?>>produk</option>
         </select>
-    	<input type="text" name="textcari" class="newsletter_input" value="<?php if(isset($_POST['textcari'])){ echo $_POST['textcari']; } else { echo "Kata Kunci..."; }?>" onBlur="if(this.value=='') this.value='Kata Kunci...';" onFocus="if(this.value=='Kata Kunci...') this.value='';" /><input type="image" src="images/search.png" width="45" name="cari" style="margin-bottom:-14px;" title="Cari"/>
+    	<input type="text" name="textcari" class="newsletter_input" value="<?php if(isset($_POST['textcari'])){ echo $_POST['textcari']; } else { echo "Kata Kunci..."; }?>" onBlur="if(this.value=='') this.value='Kata Kunci...';" onFocus="if(this.value=='Kata Kunci...') this.value='';" /></td><td>
+        <button name="cari" class="action"/>
+        <span class="icon icon198"></span></button>
     </form>
     </td></tr>
     </table>
@@ -506,15 +513,15 @@ else
 				<td align="center"><?php echo $dproduk['diskon_produk']; ?> %</td>
 				<td align="center">
 					<a href="?page=detailproduk&idp=<?php echo $dproduk['id_produk']; ?>" title="Tambah Detail Produk">
-                    <img src="images/detail.png" border="0" /></a></td>
-				<td>
-                	<a href="?page=produk&act=edit&idb=<?php echo $dproduk['id_produk']; ?>">
-                    	<img src="images/user_edit.png" alt="" title="" border="0" />
+                    <span class="icon icon3"></span></a></td>
+				<td align="center">
+                	<a href="?page=produk&act=edit&idb=<?php echo $dproduk['id_produk']; ?>" title="Ubah">
+                	<span class="icon icon145"></span>
                     </a>
                 </td>
-				<td width="45">
-					<a href="<?php echo $dproduk['id_produk']; ?>" id="produk" class="ask">
-						<img src="images/trash.png" alt="" title="" border="0" />
+				<td align="center">
+					<a href="<?php echo $dproduk['id_produk']; ?>" id="produk" class="ask" title="Hapus">
+                	<span class="icon icon186"></span>
 					</a>
 				</td>
 			<?php

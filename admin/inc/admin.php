@@ -119,7 +119,10 @@ if(isset($_GET['act'])){
                 <td><input type="password" name="cpassword" id="cpass" rows="5" cols="60" class="inputan"/></td>
             </tr>
             <tr>
-                <td colspan="2" align="center"><input type="submit" name="save" class="buton" value="Save" /></td>
+                <td colspan="2" align="center">
+                	<button name="save" class="blue"/><span class="label1">Simpan</span></button>
+                    <a class="button red" href="?page=admin"/><span class="label1">Batal</span></a>
+                </td>
             </tr>
         </table>
 	</form>
@@ -144,7 +147,8 @@ else
 	<table width="100%" style=" margin-top:10px;">
     <tr>
     <td align="right">
-	<a href="?page=admin&act=add" class="buton">Tambah Admin</a>
+	<a href="?page=admin&act=add" class="button blue">
+    <span class="label1">Tambah Admin</span></a>
     </td>
     <td align="right" width="70%">
     <form method="post" action="">
@@ -155,7 +159,9 @@ else
             <option value="3" <?php if(isset($_POST['type'])){ echo($_POST['type'] == 3)?"selected":""; } ?>>Telephone</option>
             <option value="4" <?php if(isset($_POST['type'])){ echo($_POST['type'] == 4)?"selected":""; } ?>>Email</option>
         </select>
-    	<input type="text" name="textcari" class="newsletter_input" value="<?php if(isset($_POST['textcari'])){ echo $_POST['textcari']; } else { echo "Kata Kunci..."; }?>" onBlur="if(this.value=='') this.value='Kata Kunci...';" onFocus="if(this.value=='Kata Kunci...') this.value='';" /><input type="image" src="images/search.png" width="45" name="cari" style="margin-bottom:-14px;" title="Cari"/>
+    	<input type="text" name="textcari" class="newsletter_input" value="<?php if(isset($_POST['textcari'])){ echo $_POST['textcari']; } else { echo "Kata Kunci..."; }?>" onBlur="if(this.value=='') this.value='Kata Kunci...';" onFocus="if(this.value=='Kata Kunci...') this.value='';" /></td><td>
+        <button name="cari" class="action"/>
+        <span class="icon icon198"></span></button>
     </form>
     </td></tr>
     </table>
@@ -211,12 +217,13 @@ else
 				<td><?php echo $dadmin['email_admin']; ?></td>
 				<td width="45">
                 <?php if ($dadmin['status_login']=='0') {?>
-					<a href="<?php echo $dadmin['id_admin']; ?>" id="admin" class="ask" title="Delete"> 
-						<img src="images/trash.png" alt="" title="" border="0" />
+					<a href="<?php echo $dadmin['id_admin']; ?>" id="admin" class="ask" title="Hapus"> 
+						<span class="icon icon186"></span>
 					</a>
                 <?php } 
 				else { ?>
-						<img src="images/warning.png" alt="" title="Tidak Bisa Dihapus, Admin sedang Aktif.." border="0" />
+                	<a href="#" title="Tidak Bisa Dihapus, Admin sedang Aktif..">
+						<span class="icon icon122"></span></a>
                 <?php }?>
 				</td>
 			<?php

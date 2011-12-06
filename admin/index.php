@@ -2,6 +2,7 @@
 session_start();
 include "../fungsi/db_koneksi.php";
 include "../fungsi/function.php";
+include "../fungsi/email.php";
 
 if(!isset($_SESSION['id_admin']))
 	echo "<script>window.location = 'login.php';</script>";
@@ -17,6 +18,8 @@ if(!isset($_SESSION['id_admin']))
 <link rel="stylesheet" type="text/css" href="../js/validate/val.css" />
 <link rel="stylesheet" type="text/css" media="all" href="../js/jalert/jquery.alerts.css" />
 <link type="text/css" href="../js/datepicker/ui.all.css" rel="stylesheet" />   
+<link rel="stylesheet" href="../css/css3-buttons.css" type="text/css"  media="screen">
+
 <script type="text/javascript" src="jquery.min.js"></script>
 <script type="text/javascript" src="../js/tiny_mce/tiny_mce.js"></script>
 <script language="javascript" type="text/javascript" src="../js/jalert/jquery.alerts.js"></script>

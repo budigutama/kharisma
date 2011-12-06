@@ -1,16 +1,16 @@
 <?php
 if(isset($_POST['konfirmasi'])){
-	mysql_query("UPDATE pembelian SET status = 'konfirmasi' WHERE id_pembelian = '$_GET[id_pembelian]'");
+	mysql_query("UPDATE t_pembelian SET status = 'konfirmasi' WHERE id_pembelian = '$_GET[id_pembelian]'");
 	emailkonfirmasi($_GET['id_pembelian']);
 }
 
 if(isset($_POST['terima'])){
-	mysql_query("UPDATE pembelian SET status = 'terima', tgl_terima=now() WHERE id_pembelian = '$_GET[id_pembelian]'");
+	mysql_query("UPDATE t_pembelian SET status = 'terima', tgl_terima=now() WHERE id_pembelian = '$_GET[id_pembelian]'");
 	emailprodukditerima($_GET['id_pembelian']);
 	echo "<script>window.location = '?page=transaksi';</script>";
 }
 if(isset($_POST['kirim_resi'])){
-	mysql_query("UPDATE pembelian
+	mysql_query("UPDATE t_pembelian
 			   SET kirim_resi = '$_POST[kirim_resi]', status = 'kirim', tgl_kirim=now()
 			   WHERE id_pembelian = '$_GET[id_pembelian]'") or die(mysql_error());
 	emailresi($_GET['id_pembelian']);
@@ -24,130 +24,45 @@ if(isset($_GET['act'])){
   $id_pembelian=addslashes($_GET['id_pembelian']);
   $qcek = mysql_query("SELECT * FROM t_pembelian WHERE id_pembelian = '$id_pembelian'");
   $dcek = mysql_fetch_array($qcek);
-  if($dcek['id_rekening'] == 0){  //belum bayar
-	$sqlcart = "SELECT *
-				FROM t_pembelian a, t_detail_pembelian b, t_detailproduk c, t_produk d,
-				t_warna f, t_merek g, t_kota as i, t_provinsi as j
-				WHERE a.id_pembelian = b.id_pembelian
-				AND b.id_detailproduk = c.id_detailproduk
-				AND c.id_produk = d.id_produk
-				AND c.id_warna = f.id_warna
-				AND d.id_merek = g.id_merek
-				AND i.id_provinsi = j.id_provinsi
-				AND a.id_pembelian = $id_pembelian
-				GROUP BY b.id_detailproduk";
-  }
-  else{
-	$sqlcart = "SELECT *
-				FROM t_pembelian a, t_detail_pembelian b, t_detailproduk c, t_produk d,
-				t_warna f, t_merek g, t_kota as i, t_provinsi as j, t_rekening as k
-				WHERE a.id_pembelian = b.id_pembelian
-				AND b.id_detailproduk = c.id_detailproduk
-				AND c.id_produk = d.id_produk
-				AND c.id_warna = f.id_warna
-				AND d.id_merek = g.id_merek
-				AND i.id_provinsi = j.id_provinsi
-				AND a.id_rekening = k.id_rekening
-				AND a.id_pembelian = $id_pembelian
-				GROUP BY b.id_detailproduk";	  
-  }
+  $sqlcart = "SELECT *
+			FROM t_pembelian a, t_detail_pembelian b, t_detailproduk c, t_produk d, t_member e,
+			t_warna f, t_merek g, t_kota i, t_provinsi j
+			WHERE a.id_pembelian = b.id_pembelian
+			AND b.id_detailproduk = c.id_detailproduk
+			AND c.id_produk = d.id_produk
+			AND c.id_warna = f.id_warna
+			AND a.id_member = e.id_member
+			AND d.id_merek = g.id_merek
+			AND i.id_provinsi = j.id_provinsi
+			AND a.id_pembelian = $id_pembelian
+			GROUP BY b.id_detailproduk";	  
+
   $ambildata=mysql_query($sqlcart) or die(mysql_error());
   $datakirim=mysql_fetch_array($ambildata);
 ?>
-<h3 style="margin-left:10px; font-size:16px; color:#333"> Status Transaksi : Di <?php echo $datakirim['status']; ?></h3>
-    <div style="width:98%; padding-left:1%">
-         <div class="spek" style="float:right;">   
+         <div class="spek" style="width:97%;height:auto;margin-bottom:10px;">   
             <table width="100%" cellpadding="2">
-            <tr align="center"> 
-            	<td colspan="2" style="font-size:14px; font-weight:bold">DETAIL PEMBAYARAN</td></tr>
+            <tr> 
+            	<td colspan="2" style="font-size:14px; font-weight:bold">DETAIL PEMBELIAN</td></tr>
             <tr>
-            	<td width="110px">Jenis Pembayaran</td>
-            	<td> : <?php echo strtoupper($datakirim['pembayaran']);?></td>
+            	<td width="110px">ID Pembelian</td>
+            	<td> : <?php echo $datakirim['id_pembelian'];?></td>
             </tr>
             <tr>
-            	<td width="110px">Pengirim</td>
-            	<td> : <?php echo $datakirim['transfer_bank'];?></td>
+            	<td width="110px">Tanggal Pembelian</td>
+            	<td> : <?php echo tgl_indo($datakirim['tgl_beli']);?></td>
             </tr>
             <tr>
-            	<td width="110px">No. Transaksi </td>
-            	<td> : <?php echo $datakirim['transfer_no']; ?></td>
+            	<td width="110px">Member </td>
+            	<td> : <?php echo "[ ".$datakirim['id_member']." ] - ".$datakirim['nama_member']; ?></td>
             </tr>
             <tr>
-            	<td width="110px">Tanggal Bayar </td>
-            	<td> : <?php echo tgl_indo($datakirim['tgl_bayar']); ?></td>
+            	<td width="110px">Email Member </td>
+            	<td> : <?php echo $datakirim['email_member']; ?></td>
             </tr>
-            <?php 
-			if ($datakirim['id_rekening']!=''){
-				$rek=mysql_fetch_array(mysql_query("SELECT * FROM t_rekening WHERE id_rekening=$datakirim[id_rekening]"));
-			?>
-            <tr>
-            	<td width="110px">Bank Penerima</td>
-            	<td> : <?php echo $rek['bank_rekening']." - ".$rek['cabang_rekening'];?></td>
-            </tr>
-            <tr>
-            	<td width="110px">No. Rekening</td>
-            	<td> : <?php echo $rek['no_rekening']." a.n. ".$rek['nama_rekening'];?></td>
-            </tr>
-                        <?php
-                            }
-                        ?>
             </table>  
          </div>      
-         <div class="spek">   
-            <table width="100%" cellpadding="2">
-            <tr align="center"> 
-            	<td colspan="2" style="font-size:14px; font-weight:bold">ALAMAT PENGIRIMAN PAKET</td></tr>
-            <tr>
-            	<td width="110px">Nama Penerima</td>
-            	<td> :<?php echo $datakirim['kirim_nama'];?></td>
-            </tr>
-            <tr>
-            	<td width="110px">Alamat </td>
-            	<td> :<?php echo $datakirim['kirim_alamat'];
-					$kota=mysql_fetch_array(mysql_query("SELECT * FROM t_kota a, t_provinsi b
-														WHERE a.id_provinsi=b.id_provinsi
-														AND a.id_kota=$datakirim[kirim_kota]"));
-					echo "   $kota[nama_kota] - $kota[nama_provinsi]";?></td>
-            </tr>
-            <tr>
-            	<td width="110px">Kode Pos</td>
-            	<td> :<?php echo $datakirim['kirim_kdpos'];?></td>
-            </tr>
-            <tr>
-            	<td width="110px">No. telepon</td>
-            	<td> :<?php echo $datakirim['kirim_telp'];?></td>
-            </tr>
-            <tr>
-            	<td width="110px">Cetak Label</td>
-                <td> <form method="post" action="laporan/shiping.php" target="_blank">
-                    		<input type="hidden" name="iddp" value="<?php echo $datakirim['id_pembelian']; ?>" />
-                        	: <input type="image" src="images/pdf.gif" />
-                        </form></td>
-            </tr>
-            <tr>
-            	<td colspan="2"><strong>Peket dikirim dengan :</strong></td>
-            </tr>
-            <tr>
-            	<td width="110px">Jenis Pengiriman</td>
-            	<td> :<?php
-			$kirim=mysql_fetch_array(mysql_query("SELECT * FROM t_forwarder a, t_jeniskirim b
-														WHERE a.id_forwarder=b.id_forwarder
-														AND b.id_jeniskirim=$datakirim[id_jeniskirim]")); 
-					echo "$kirim[nama_forwarder] - jenis $kirim[nama_jeniskirim]";?></td>
-            </tr>
-                        <?php
-                        if($datakirim['kirim_resi'] != ''){
-                        ?>
-            <tr align="left">
-               <td>No Resi </h3></td>
-               <td>: <b><?php echo $datakirim['kirim_resi']; ?></b></td>
-            </tr>
-                        <?php
-                        }
-                        ?>
-            </table>  
-         </div></div><br />      
-<div class="alamat">   
+
 <table width="100%" id="rounded-corner">
   <tr>
     <th width="24">No.</th>
@@ -204,14 +119,9 @@ $banknota = $data['transfer_bank'];
                     <td colspan="2" align="left">
                     <strong>Ongkos Kirim</strong>
                     </td>
-                    <td colspan="3" align="center">(
-                    <?php
-                    echo (int)ceil($qb)." Kg  x  ";
-                    $ongkir=((int)ceil($qb) * $datakirim['kirim_ongkos']);?>
-                     Rp. <?php echo number_format($datakirim['kirim_ongkos'],"2",",","."); ?> )
-                    </td>
+                    <td colspan="3" align="center"></td>
                     <td align="right" style="font-weight:bold">
-                      Rp. <?php echo number_format($ongkir,"2",",","."); ?>
+                      Rp. <?php echo number_format($datakirim['kirim_ongkos'],"2",",","."); ?>
                     </td>
                 </tr>
                 <tr>
@@ -224,40 +134,133 @@ $banknota = $data['transfer_bank'];
                     <?php if($datakirim['pembayaran']=="paypal")
 							echo "$ ".number_format((konversikedolar($total + $ongkir)),3);
 						  else
-                        	echo "Rp. ".number_format(($total + $ongkir),"2",",","."); ?>
+                        	echo "Rp. ".number_format(($total + $datakirim['kirim_ongkos']),"2",",","."); ?>
                     </td>
                 </tr>
 </table>
-</div>
+<?php } ?>
+<h3 style="margin-left:-20px;"> Status Transaksi : Di <?php echo $datakirim['status']; ?></h3><br />
+    <div style="width:99%; margin-top:28px;">
+         <div class="spek" style="float:right;">   
+            <table width="100%" cellpadding="2">
+            <tr> 
+            	<td colspan="2" style="font-size:14px; font-weight:bold">DETAIL PEMBAYARAN</td></tr>
+            <tr>
+            	<td width="110px">Jenis Pembayaran</td>
+            	<td> : <?php echo strtoupper($datakirim['pembayaran']);?></td>
+            </tr>
+            <tr>
+            	<td width="110px">Pengirim</td>
+            	<td> : <?php echo $datakirim['transfer_bank'];?></td>
+            </tr>
+            <tr>
+            	<td width="110px">No. Transaksi </td>
+            	<td> : <?php echo $datakirim['transfer_no']; ?></td>
+            </tr>
+            <tr>
+            	<td width="110px">Tanggal Bayar </td>
+            	<td> : <?php echo tgl_indo($datakirim['tgl_bayar']); ?></td>
+            </tr>
+            <?php 
+			if ($datakirim['id_rekening']!=''){
+				$rek=mysql_fetch_array(mysql_query("SELECT * FROM t_rekening WHERE id_rekening=$datakirim[id_rekening]"));
+			?>
+            <tr>
+            	<td width="110px">Bank Penerima</td>
+            	<td> : <?php echo $rek['bank_rekening']." - ".$rek['cabang_rekening'];?></td>
+            </tr>
+            <tr>
+            	<td width="110px">No. Rekening</td>
+            	<td> : <?php echo $rek['no_rekening']." a.n. ".$rek['nama_rekening'];?></td>
+            </tr>
+                        <?php
+                            }
+                        ?>
+            </table>  
+         </div>      
+         <div class="spek">   
+            <table width="100%" cellpadding="2">
+            <tr> 
+            	<td colspan="2" style="font-size:14px; font-weight:bold">ALAMAT PENGIRIMAN PAKET</td></tr>
+            <tr>
+            	<td width="110px">Nama Penerima</td>
+            	<td> :<?php echo $datakirim['kirim_nama'];?></td>
+            </tr>
+            <tr>
+            	<td width="110px">Alamat </td>
+            	<td> :<?php echo $datakirim['kirim_alamat'];
+					$kota=mysql_fetch_array(mysql_query("SELECT * FROM t_kota a, t_provinsi b
+														WHERE a.id_provinsi=b.id_provinsi
+														AND a.id_kota=$datakirim[kirim_kota]"));
+					echo "   $kota[nama_kota] - $kota[nama_provinsi]";?></td>
+            </tr>
+            <tr>
+            	<td width="110px">Kode Pos</td>
+            	<td> :<?php echo $datakirim['kirim_kdpos'];?></td>
+            </tr>
+            <tr>
+            	<td width="110px">No. telepon</td>
+            	<td> :<?php echo $datakirim['kirim_telp'];?></td>
+            </tr>
+            <tr>
+            	<td width="110px">Cetak Label</td>
+                <td> <form method="post" action="laporan/shiping.php" target="_blank">
+                    		<input type="hidden" name="iddp" value="<?php echo $datakirim['id_pembelian']; ?>" />
+                        	: <input type="image" src="images/pdf.gif" />
+                        </form></td>
+            </tr>
+            <tr>
+            	<td colspan="2"><strong>Peket dikirim dengan :</strong></td>
+            </tr>
+            <tr>
+            	<td width="110px">Jenis Pengiriman</td>
+            	<td> :<?php
+			$kirim=mysql_fetch_array(mysql_query("SELECT * FROM t_forwarder a, t_jeniskirim b
+														WHERE a.id_forwarder=b.id_forwarder
+														AND b.id_jeniskirim=$datakirim[id_jeniskirim]")); 
+					echo "$kirim[nama_forwarder] - jenis $kirim[nama_jeniskirim]";?></td>
+            </tr>
+                        <?php
+                        if($datakirim['kirim_resi'] != ''){
+                        ?>
+            <tr align="left">
+               <td>No Resi </h3></td>
+               <td>: <b><?php echo $datakirim['kirim_resi']; ?></b></td>
+            </tr>
+                        <?php
+                        }
+                        ?>
+            </table>  
+         </div></div>
+         
 <form action="" method="post">
 	<input type="hidden" name="id_pembelian" value="<?php echo $id_pembelian;?>" />
     <?php
 	if($datakirim['status'] == 'konfirmasi'){
 	?>
-    <strong>Kirim Resi  :</strong><input type="text" name="kirim_resi" class="newsletter_input"/><br />
-	<input type="submit" name="save" value="Simpan" class="buton" />
-	<input type="button" name="batal" value="Batal" class="buton" onClick="javasvript:history.back(-1)" />
+    <strong>Nomor Resi  :</strong><input type="text" name="kirim_resi" class="newsletter_input"/><br />
+	<button name="save" class="blue" /><span class="label1">Simpan</span></button>
     <?php
 	}
 	?>
-</form><br />
+</form>
 
 <?php
 if($datakirim['status'] == 'bayar'){
 ?>
 <form method="post" action="">
-	<input type="submit" name="konfirmasi" value="Konfirmasi" class="buton" />
+	<button name="konfirmasi" class="blue" /><span class="label1">Konfirmasi</span></button>
 </form>
 <?php
 }
 elseif($datakirim['status'] == 'kirim'){
 ?>
 <form method="post" action="">
-	<input type="submit" name="terima" value="Diterima" class="buton" />
+	<button name="terima" class="blue" /><span class="label1">Diterima</span></button>
 </form>
 <?php
 }
- }
+ ?><a class="button red" href="?page=transaksi"/><span class="label1">Kembali</span></a> <?php
 }
 else
 {
@@ -273,10 +276,9 @@ else
 		$posisi = ($halaman-1) * $batas;
 	}
 	?>
+     <form method="post" action="">
 	<table style=" margin-top:10px;">
     <tr>
-    </td>
-    <form method="post" action="">
     <td>
       Tanggal<br />
       <input type="text" id="tanggal1" class="newsletter_input" name="tanggal" <?php echo(isset($_POST['tanggal'])) ? "value='$_POST[tanggal]'" : "" ; ?> />
@@ -302,9 +304,9 @@ else
      </select>
      </td>
      <td valign="bottom">                
-     <input type="image" src="images/search.png" width="45" name="cari"  title="Cari"/></td>
-            </tr>
-        </table>
+        <button name="cari" class="action" style="margin-top:16px;"/>
+        <span class="icon icon198"></span></button>
+    </table>
     </form>	  
 	<table width="592" id="rounded-corner">
 		<thead>
@@ -365,8 +367,8 @@ else
 					<td><?php echo status_bayar($ddatapembelian['status_pembayaran']); ?></td>
 					<td><?php echo $ddatapembelian['status']; ?></td>
 					<td>
-                    <a href="?page=transaksi&act=edit&id_pembelian=<?php echo $ddatapembelian['id_pembelian']; ?>">
-                    <img src="images/user_edit.png" alt="" title="" border="0" /></a></td>
+                    <a href="?page=transaksi&act=edit&id_pembelian=<?php echo $ddatapembelian['id_pembelian']; ?>" title="Lihat detail">
+                    <span class="icon icon84"></span></a></td>
 				</tr>
 			<?php
 			$no++;

@@ -11,5 +11,4 @@
             <p align="left"> 5. Apabila telah melakukan pembayaran, maka produk/barang akan segera kami kirimkan. </p>
             
 	</div>
-    <input type="submit" onclick="window.history.back(-1);" value="kembali" />                      
 </div>

@@ -28,6 +28,7 @@
 			});
 		});
 </script>
+<script type="text/javascript" src="inc/textform.js"></script>
 <h2>Pengolahan Data Kategori</h2> 
 
 <?php
@@ -126,8 +127,8 @@ if(isset($_GET['act'])){
             </tr>
         	<tr>
             	<td colspan="2" align="center">
-                <input type="submit" name="save" value="Simpan" class="buton"/>
-                <input type="reset" name="reset" value="Batal" onClick="window.location = '?page=kategori';" class="buton"/></td>
+                	<button name="save" class="blue"/><span class="label1">Simpan</span></button>
+                    <a class="button red" href="?page=kategori"/><span class="label1">Batal</span></a>
             </tr>
         </table>
 	</form>
@@ -159,8 +160,8 @@ if(isset($_GET['act'])){
         	<tr>
             	<td colspan="2" align="center">
                 	<input type="hidden" name="id_kategori" value="<?php echo $_GET['idk']; ?>" />
-                	<input type="submit" name="update" value="Ubah" class="buton"/>
-                    <input type="reset" name="reset" value="Batal" onClick="window.location = '?page=kategori';" class="buton"/>
+                	<button name="update" class="blue"/><span class="label1">Ubah</span></button>
+                    <a class="button red" href="?page=kategori"/><span class="label1">Batal</span></a>
                 </td>
             </tr>
         </table>
@@ -185,11 +186,14 @@ else{
 	<table width="100%" style=" margin-top:10px;">
     <tr>
     <td align="right">
-	<a href="?page=kategori&act=add" class="buton">Tambah Kategori</a>
+	<a href="?page=kategori&act=add" class="button blue">
+    <span class="label1">Tambah Kategori</span></a>
     </td>
     <td align="right" width="70%">
     <form method="post" action="">
-    	<input type="text" name="textcari" class="newsletter_input" value="<?php if(isset($_POST['textcari'])){ echo $_POST['textcari']; } else { echo "Kata Kunci..."; }?>" onBlur="if(this.value=='') this.value='Kata Kunci...';" onFocus="if(this.value=='Kata Kunci...') this.value='';" /><input type="image" src="images/search.png" width="45" name="cari" style="margin-bottom:-14px;" title="Cari"/>
+    	<input type="text" name="textcari" class="newsletter_input" value="<?php if(isset($_POST['textcari'])){ echo $_POST['textcari']; } else { echo "Kata Kunci..."; }?>" onBlur="if(this.value=='') this.value='Kata Kunci...';" onFocus="if(this.value=='Kata Kunci...') this.value='';" /></td><td>
+        <button name="cari" class="action"/>
+        <span class="icon icon198"></span></button>
     </form>
     </td></tr>
     </table>
@@ -233,10 +237,12 @@ else{
             <td><?php echo $dkategori['nama_kategori']; ?></td>
             <td><?php echo $dkategori['kode_kategori']; ?></td>
             <td><?php echo $dkategori['deskripsi_kategori']; ?></td>
-            <td><a href="?page=kategori&act=edit&idk=<?php echo $dkategori['id_kategori']; ?>"><img src="images/user_edit.png" alt="" title="" border="0" /></a></td>
+            <td><a href="?page=kategori&act=edit&idk=<?php echo $dkategori['id_kategori']; ?>" title="Ubah">
+            <span class="icon icon145"></span>
+            </a></td>
             <td width="45">
-            	<a href="<?php echo $dkategori['id_kategori']; ?>" id="kategori" class="ask">
-                	<img src="images/trash.png" alt="" title="" border="0" />
+            	<a href="<?php echo $dkategori['id_kategori']; ?>" id="kategori" class="ask" title="Hapus">
+                	<span class="icon icon186"></span>
                 </a>
             </td>
         <?php
